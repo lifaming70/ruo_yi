@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ZYArticleMapper">
+
+<insert id="insertArticle">
+    insert into zy_article (article_type,article_state,article_keyword,article_title,article_details,create_time) values
+        (#{articleType,jdbcType=VARCHAR},
+        #{articleState,jdbcType=VARCHAR},
+        #{articleKeyword,jdbcType=VARCHAR},
+        #{articleTitle,jdbcType=VARCHAR},
+        #{articleDetails,jdbcType=VARCHAR},
+        sysdate())
+    </insert>
+
+<update id="deleteArticle">
+    update zy_article set article_state = '0' where article_id = #{articleId,jdbcType=VARCHAR}
+    </update>
+
+<update id="updateArticle">
+    update zy_article set
+        article_type = #{articleType,jdbcType=VARCHAR},
+        article_state = #{articleState,jdbcType=VARCHAR},
+        article_keyword = #{articleKeyword,jdbcType=VARCHAR},
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+        article_details = #{articleDetails,jdbcType=VARCHAR}
+    where article_id = #{articleId,jdbcType=VARCHAR}
+    </update>
+
+<select id="getArticleList" resultType="com.ruoyi.generator.pojo.ZYArticle">
+    select article_id as articleId,
+           article_type as articleType,
+           article_state as articleState,
+           article_keyword as articleKeyword,
+           article_title as articleTitle,
+           article_details as articleDetails,
+           create_time as createTime
+    from zy_article where article_state = '1'
+    <if test="articleType != null">
+        and article_type = #{articleType,jdbcType=VARCHAR}
+    </if>
+    <if test="articleKeyword != null">
+        and article_keyword = #{articleKeyword,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null and endTime != null">
+        and create_time &gt;= #{createTime,jdbcType=VARCHAR}
+        and create_time &lt;= #{endTime,jdbcType=VARCHAR}
+    </if>
+
+    </select>
+
+<select id="getArticle" resultType="com.ruoyi.generator.pojo.ZYArticle">
+    select article_id as articleId,
+           article_type as articleType,
+           article_state as articleState,
+           article_keyword as articleKeyword,
+           article_title as articleTitle,
+           article_details as articleDetails
+    from zy_article where article_id = #{articleId,jdbcType=VARCHAR}
+    </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ZYTypeConfigMapper">
+
+    <insert id="insertType">
+        insert into zy_type_config (type_name,type_state,create_time) values
+        (#{typeName,jdbcType=VARCHAR},
+         '1',
+         sysdate())
+    </insert>
+
+    <update id="deleteType">
+        update zy_type_config set type_state = '0' where type_id = #{typeId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateType">
+        update zy_type_config set
+                              type_name = #{typeName,jdbcType=VARCHAR}
+        where type_id = #{typeId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getTypeList" resultType="com.ruoyi.generator.pojo.ZYTypeConfig">
+        select type_id as typeId,
+               type_name as typeName,
+               create_time as createTime
+        from zy_type_config where type_state = '1'
+        <if test="typeName != null">
+            and type_name = #{typeName,jdbcType=VARCHAR}
+        </if>
+        limit #{pageSize,jdbcType=INTEGER},#{pageNumber,jdbcType=INTEGER}
+    </select>
+
+    <select id="getType" resultType="com.ruoyi.generator.pojo.ZYTypeConfig">
+        select type_id as typeId,
+               type_name as typeName,
+               create_time as createTime
+        from zy_type_config where type_state = '1' and type_id = #{typeId,jdbcType=VARCHAR}
+    </select>
+</mapper>
