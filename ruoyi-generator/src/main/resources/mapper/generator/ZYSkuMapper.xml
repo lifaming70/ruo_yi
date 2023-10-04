@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ZYSkuMapper">
+
+    <resultMap id="BaseResultMap" type="com.ruoyi.generator.pojo.ZySku">
+        <result column="sku_id" property="skuId" jdbcType="VARCHAR"/>
+        <result column="sku_name" property="skuName" jdbcType="VARCHAR"/>
+        <result column="sku_type" property="skuType" jdbcType="VARCHAR"/>
+        <result column="vip" property="vip" jdbcType="VARCHAR"/>
+        <result column="sku_price" property="skuPrice" jdbcType="DECIMAL"/>
+        <result column="sku_integral" property="skuIntegral" jdbcType="VARCHAR"/>
+        <result column="sku_term" property="skuTerm" jdbcType="VARCHAR"/>
+        <result column="income" property="income" jdbcType="VARCHAR"/>
+        <result column="sku_quota" property="skuQuota" jdbcType="VARCHAR"/>
+        <result column="sku_number" property="skuNumber" jdbcType="INTEGER"/>
+        <result column="sku_number_virtually" property="skuNumberVirtually" jdbcType="INTEGER"/>
+        <result column="subordinate_number" property="subordinateNumber" jdbcType="INTEGER"/>
+        <result column="give_me" property="giveMe" jdbcType="VARCHAR"/>
+        <result column="give_superior" property="giveSuperior" jdbcType="VARCHAR"/>
+        <result column="repurchase_me" property="repurchaseMe" jdbcType="VARCHAR"/>
+        <result column="give_superior_integral" property="giveSuperiorIntegral" jdbcType="VARCHAR"/>
+        <result column="repurchase_me_integral" property="repurchaseMeIntegral" jdbcType="VARCHAR"/>
+        <result column="lottery_number" property="lotteryNumber" jdbcType="INTEGER"/>
+        <result column="superior_lottery_number" property="superiorLotteryNumber" jdbcType="INTEGER"/>
+        <result column="due_for_collection" property="dueForCollection" jdbcType="VARCHAR"/>
+        <result column="end_date" property="endDate" jdbcType="DATETIMEOFFSET"/>
+        <result column="sort" property="sort" jdbcType="VARCHAR"/>
+        <result column="give" property="give" jdbcType="VARCHAR"/>
+        <result column="popular" property="popular" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+        <result column="sku_details" property="skuDetails" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        sku_id,
+        sku_name,
+        sku_type,
+        vip,
+        sku_price,
+        sku_integral,
+        sku_term,
+        income,
+        sku_quota,
+        sku_number,
+        sku_number_virtually,
+        subordinate_number,
+        give_me,
+        give_superior,
+        repurchase_me,
+        give_superior_integral,
+        repurchase_me_integral,
+        lottery_number,
+        superior_lottery_number,
+        due_for_collection,
+        end_date,
+        sort,
+        give,
+        popular,
+        state,
+        sku_details
+    </sql>
+    
+<insert id="skuAdd">
+    insert into zy_sku
+    (sku_id,
+     sku_name,
+     sku_type,
+     vip,
+     sku_price,
+     sku_integral,
+     sku_term,
+     income,
+     sku_quota,
+     sku_number,
+     sku_number_virtually,
+     subordinate_number,
+     give_me,
+     give_superior,
+     repurchase_me,
+     give_superior_integral,
+     repurchase_me_integral,
+     lottery_number,
+     superior_lottery_number,
+     due_for_collection,
+     end_date,
+     sort,
+     give,
+     popular,
+     state,
+     sku_details)
+    values
+    (#{skuId,jdbcType=VARCHAR},
+    #{skuName,jdbcType=VARCHAR},
+    #{skuType,jdbcType=VARCHAR},
+    #{vip,jdbcType=VARCHAR},
+    #{skuPrice,jdbcType=VARCHAR},
+    #{skuIntegral,jdbcType=VARCHAR},
+    #{skuTerm,jdbcType=VARCHAR},
+    #{income,jdbcType=VARCHAR},
+    #{skuQuota,jdbcType=VARCHAR},
+    #{skuNumber,jdbcType=VARCHAR},
+    #{skuNumberVirtually,jdbcType=VARCHAR},
+    #{subordinateNumber,jdbcType=VARCHAR},
+    #{giveMe,jdbcType=VARCHAR},
+    #{giveSuperior,jdbcType=VARCHAR},
+    #{repurchaseMe,jdbcType=VARCHAR},
+    #{giveSuperiorIntegral,jdbcType=VARCHAR},
+    #{repurchaseMeIntegral,jdbcType=VARCHAR},
+    #{lotteryNumber,jdbcType=VARCHAR},
+    #{superiorLotteryNumber,jdbcType=VARCHAR},
+    #{dueForCollection,jdbcType=VARCHAR},
+    #{endDate,jdbcType=VARCHAR},
+    #{sort,jdbcType=INTEGER},
+    #{give,jdbcType=VARCHAR},
+    #{popular,jdbcType=VARCHAR},
+    #{state,jdbcType=VARCHAR},
+    #{skuDetails,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getSku" resultType="com.ruoyi.generator.pojo.ZySku" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from zy_sku
+        where 1=1
+        <if test="skuName != null">
+            and sku_name like CONCAT('%', #{skuName,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="skuType != null">
+            and sku_type = #{skuType,jdbcType=VARCHAR}
+        </if>
+        <if test="vip != null">
+            and vip = #{vip,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

@@ -90,13 +90,24 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 响应请求分页数据
+     * 响应无数据返回
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static TableDataInfo getDataTable() {
         TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setMsg("成功");
+        return rspData;
+    }
+
+    /**
+     * 响应无数据返回
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static TableDataInfo getError() {
+        TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.ERROR);
-        rspData.setMsg("查询失败");
+        rspData.setMsg("系统异常");
         return rspData;
     }
 

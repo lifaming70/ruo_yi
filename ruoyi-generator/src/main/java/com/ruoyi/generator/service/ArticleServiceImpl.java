@@ -4,9 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.generator.mapper.ZYArticleMapper;
-import com.ruoyi.generator.mapper.ZYTypeConfigMapper;
 import com.ruoyi.generator.pojo.ZYArticle;
-import com.ruoyi.generator.pojo.ZYTypeConfig;
 import com.ruoyi.generator.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +18,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Resource
     ZYArticleMapper zyArticleMapper;
-
-    @Resource
-    ZYTypeConfigMapper zyTypeConfigMapper;
 
     @Override
     public TableDataInfo articleCrud(ZYArticle zyArticle, String type) {
@@ -48,35 +43,6 @@ public class ArticleServiceImpl implements ArticleService {
                 List<ZYArticle>  articles = zyArticleMapper.getArticle(zyArticle.getArticleId());
 
                 return Result.getDataTable(articles);
-        }
-
-        return Result.getDataTable();
-    }
-
-    @Override
-    public TableDataInfo articleTypeCrud(ZYTypeConfig zyTypeConfig, String type) {
-
-        String values = JSONObject.parseObject(type).get("type").toString();
-
-        switch (values) {
-            case "1":
-                zyTypeConfigMapper.insertType(zyTypeConfig);
-                break;
-            case "2":
-                zyTypeConfigMapper.deleteType(zyTypeConfig);
-                break;
-            case "3":
-                zyTypeConfigMapper.updateType(zyTypeConfig);
-                break;
-            case "4":
-                PageHelper.startPage(zyTypeConfig.getPageNumber(),zyTypeConfig.getPageSize());
-                List<ZYTypeConfig> list = zyTypeConfigMapper.getTypeList(zyTypeConfig);
-
-                return Result.getDataTable(list);
-            case "5":
-                List<ZYTypeConfig> configList= zyTypeConfigMapper.getType(zyTypeConfig.getTypeId());
-
-                return Result.getDataTable(configList);
         }
 
         return Result.getDataTable();

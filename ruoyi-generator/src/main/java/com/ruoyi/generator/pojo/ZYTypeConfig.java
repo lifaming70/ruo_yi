@@ -24,6 +24,10 @@ public class ZYTypeConfig {
      */
     private String typeState;
     /**
+     * 类型标签
+     */
+    private String typeLabel;
+    /**
      * 创建时间
      */
     private String createTime;

@@ -2,8 +2,8 @@ package com.ruoyi.generator.controller;
 
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.generator.pojo.ZYArticle;
-import com.ruoyi.generator.service.ArticleService;
+import com.ruoyi.generator.pojo.ZYTypeConfig;
+import com.ruoyi.generator.service.TypeService;
 import com.ruoyi.generator.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,22 +15,21 @@ import javax.annotation.Resource;
 
 @RestController
 @Slf4j
-@RequestMapping("/ArticleWeb")
-public class ArticleWeb {
+@RequestMapping("/TypeWeb")
+public class TypeWeb {
 
     @Resource
-    ArticleService articleService;
+    TypeService typeService;
 
     /**
-     * 文章增删改查
-     * @param zyArticle
+     * 类型crud
      * @return
      */
     @Anonymous
-    @PostMapping("/articleCrud")
-    public TableDataInfo articleCrud(@RequestBody ZYArticle zyArticle, @RequestBody String type) {
+    @PostMapping("/typeCrud")
+    public TableDataInfo typeCrud(@RequestBody ZYTypeConfig zyTypeConfig, @RequestBody String type) {
         try {
-            return articleService.articleCrud(zyArticle,type);
+            return typeService.typeCrud(zyTypeConfig,type);
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);

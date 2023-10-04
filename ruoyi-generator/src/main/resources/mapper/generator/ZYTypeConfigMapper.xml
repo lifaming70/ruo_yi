@@ -5,9 +5,10 @@
 <mapper namespace="com.ruoyi.generator.mapper.ZYTypeConfigMapper">
 
     <insert id="insertType">
-        insert into zy_type_config (type_name,type_state,create_time) values
+        insert into zy_type_config (type_name,type_state,type_label,create_time) values
         (#{typeName,jdbcType=VARCHAR},
          '1',
+         #{typeLabel,jdbcType=VARCHAR},
          sysdate())
     </insert>
 
@@ -17,7 +18,7 @@
 
     <update id="updateType">
         update zy_type_config set
-                              type_name = #{typeName,jdbcType=VARCHAR}
+               type_name = #{typeName,jdbcType=VARCHAR}
         where type_id = #{typeId,jdbcType=VARCHAR}
     </update>
 
@@ -26,6 +27,7 @@
                type_name as typeName,
                create_time as createTime
         from zy_type_config where type_state = '1'
+        and  type_label = #{typeLabel,jdbcType=VARCHAR}
         <if test="typeName != null">
             and type_name = #{typeName,jdbcType=VARCHAR}
         </if>
@@ -36,6 +38,8 @@
         select type_id as typeId,
                type_name as typeName,
                create_time as createTime
-        from zy_type_config where type_state = '1' and type_id = #{typeId,jdbcType=VARCHAR}
+        from zy_type_config
+        where type_state = '1'
+          and type_id = #{typeId,jdbcType=VARCHAR}
     </select>
 </mapper>
