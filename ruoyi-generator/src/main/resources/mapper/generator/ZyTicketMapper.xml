@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ZyTicketMapper">
+
+    <resultMap type="com.ruoyi.generator.pojo.ZyTicket" id="ZyTicketResult">
+            <result property="ticketId" column="ticket_id"/>
+            <result property="ticketName" column="ticket_name"/>
+            <result property="ticketImage" column="ticket_image"/>
+            <result property="probability" column="probability"/>
+            <result property="ticketType" column="ticket_type"/>
+            <result property="amountMin" column="amount_min"/>
+            <result property="amountMax" column="amount_max"/>
+            <result property="discount" column="discount"/>
+            <result property="state" column="state"/>
+            <result property="createTime" column="create_time"/>
+            <result property="skuId" column="sku_id"/>
+            <result property="notes" column="notes"/>
+    </resultMap>
+
+    <sql id="selectZyTicketVo">
+        select ticket_id, ticket_name, ticket_image, probability, ticket_type, amount_min, amount_max, discount, state, create_time, sku_id, notes
+        from zy_ticket
+    </sql>
+
+    <select id="selectZyTicketList" parameterType="com.ruoyi.generator.pojo.ZyTicket" resultMap="ZyTicketResult">
+        <include refid="selectZyTicketVo"/>
+        <where>
+                        <if test="ticketName != null  and ticketName != ''">
+                            and ticket_name like concat('%', #{ticketName}, '%')
+                        </if>
+                        <if test="ticketImage != null  and ticketImage != ''">
+                            and ticket_image = #{ticketImage}
+                        </if>
+                        <if test="probability != null  and probability != ''">
+                            and probability = #{probability}
+                        </if>
+                        <if test="ticketType != null  and ticketType != ''">
+                            and ticket_type = #{ticketType}
+                        </if>
+                        <if test="amountMin != null  and amountMin != ''">
+                            and amount_min = #{amountMin}
+                        </if>
+                        <if test="amountMax != null  and amountMax != ''">
+                            and amount_max = #{amountMax}
+                        </if>
+                        <if test="discount != null  and discount != ''">
+                            and discount = #{discount}
+                        </if>
+                        <if test="state != null  and state != ''">
+                            and state = #{state}
+                        </if>
+                        <if test="skuId != null  and skuId != ''">
+                            and sku_id = #{skuId}
+                        </if>
+                        <if test="notes != null  and notes != ''">
+                            and notes = #{notes}
+                        </if>
+        </where>
+    </select>
+
+    <select id="selectZyTicketByTicketId" parameterType="Long"
+            resultMap="ZyTicketResult">
+            <include refid="selectZyTicketVo"/>
+            where ticket_id = #{ticketId}
+    </select>
+
+    <insert id="insertZyTicket" parameterType="com.ruoyi.generator.pojo.ZyTicket">
+        insert into zy_ticket
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="ticketName != null and ticketName != ''">ticket_name,
+                    </if>
+                    <if test="ticketImage != null">ticket_image,
+                    </if>
+                    <if test="probability != null">probability,
+                    </if>
+                    <if test="ticketType != null">ticket_type,
+                    </if>
+                    <if test="amountMin != null">amount_min,
+                    </if>
+                    <if test="amountMax != null">amount_max,
+                    </if>
+                    <if test="discount != null">discount,
+                    </if>
+                    <if test="state != null">state,
+                    </if>
+                    <if test="createTime != null">create_time,
+                    </if>
+                    <if test="skuId != null">sku_id,
+                    </if>
+                    <if test="notes != null">notes,
+                    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="ticketName != null and ticketName != ''">#{ticketName},
+                    </if>
+                    <if test="ticketImage != null">#{ticketImage},
+                    </if>
+                    <if test="probability != null">#{probability},
+                    </if>
+                    <if test="ticketType != null">#{ticketType},
+                    </if>
+                    <if test="amountMin != null">#{amountMin},
+                    </if>
+                    <if test="amountMax != null">#{amountMax},
+                    </if>
+                    <if test="discount != null">#{discount},
+                    </if>
+                    <if test="state != null">#{state},
+                    </if>
+                    <if test="createTime != null">#{createTime},
+                    </if>
+                    <if test="skuId != null">#{skuId},
+                    </if>
+                    <if test="notes != null">#{notes},
+                    </if>
+        </trim>
+    </insert>
+
+    <update id="updateZyTicket" parameterType="com.ruoyi.generator.pojo.ZyTicket">
+        update zy_ticket
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="ticketName != null and ticketName != ''">ticket_name =
+                        #{ticketName},
+                    </if>
+                    <if test="ticketImage != null">ticket_image =
+                        #{ticketImage},
+                    </if>
+                    <if test="probability != null">probability =
+                        #{probability},
+                    </if>
+                    <if test="ticketType != null">ticket_type =
+                        #{ticketType},
+                    </if>
+                    <if test="amountMin != null">amount_min =
+                        #{amountMin},
+                    </if>
+                    <if test="amountMax != null">amount_max =
+                        #{amountMax},
+                    </if>
+                    <if test="discount != null">discount =
+                        #{discount},
+                    </if>
+                    <if test="state != null">state =
+                        #{state},
+                    </if>
+                    <if test="createTime != null">create_time =
+                        #{createTime},
+                    </if>
+                    <if test="skuId != null">sku_id =
+                        #{skuId},
+                    </if>
+                    <if test="notes != null">notes =
+                        #{notes},
+                    </if>
+        </trim>
+        where ticket_id = #{ticketId}
+    </update>
+
+    <delete id="deleteZyTicketByTicketId" parameterType="Long">
+        delete from zy_ticket where ticket_id = #{ticketId}
+    </delete>
+
+    <delete id="deleteZyTicketByTicketIds" parameterType="String">
+        delete from zy_ticket where ticket_id in
+        <foreach item="ticketId" collection="array" open="(" separator="," close=")">
+            #{ticketId}
+        </foreach>
+    </delete>
+</mapper>

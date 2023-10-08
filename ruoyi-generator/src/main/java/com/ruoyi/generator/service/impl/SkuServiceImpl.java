@@ -1,4 +1,4 @@
-package com.ruoyi.generator.service;
+package com.ruoyi.generator.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -7,6 +7,7 @@ import com.ruoyi.generator.mapper.ZYImageMapper;
 import com.ruoyi.generator.mapper.ZYSkuMapper;
 import com.ruoyi.generator.pojo.ZyImage;
 import com.ruoyi.generator.pojo.ZySku;
+import com.ruoyi.generator.service.SkuService;
 import com.ruoyi.generator.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class SkuServiceImpl implements SkuService{
+public class SkuServiceImpl implements SkuService {
 
     @Resource
     ZYSkuMapper zySkuMapper;
@@ -62,5 +63,11 @@ public class SkuServiceImpl implements SkuService{
         PageHelper.startPage(zySku.getPageNumber(),zySku.getPageSize());
         List<ZySku> sku = zySkuMapper.getSku(zySku);
         return Result.getDataTable(sku);
+    }
+
+    @Override
+    public TableDataInfo  skuUpdate(ZySku zySku) {
+        zySkuMapper.updateSku(zySku);
+        return Result.getDataTable();
     }
 }

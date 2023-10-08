@@ -9,4 +9,6 @@ public interface ZYSkuMapper {
     void skuAdd(ZySku zySku);
 
     List<ZySku> getSku(ZySku zySku);
+
+    void updateSku(ZySku zySku);
 }

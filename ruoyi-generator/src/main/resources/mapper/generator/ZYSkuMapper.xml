@@ -134,4 +134,84 @@
             and vip = #{vip,jdbcType=VARCHAR}
         </if>
     </select>
+
+    <update id="updateSku">
+        update zy_sku set sku_id = sku_id
+        <if test="skuName != null">
+            ,sku_name = #{skuName,jdbcType=VARCHAR}
+        </if>
+        <if test="skuType != null">
+            ,sku_type = #{skuType,jdbcType=VARCHAR}
+        </if>
+        <if test="vip != null">
+            ,vip = #{vip,jdbcType=VARCHAR}
+        </if>
+        <if test="skuPrice != null">
+            ,sku_price = #{skuPrice,jdbcType=VARCHAR}
+        </if>
+        <if test="skuIntegral != null">
+            ,sku_integral = #{skuIntegral,jdbcType=VARCHAR}
+        </if>
+        <if test="skuTerm != null">
+            ,sku_term = #{skuTerm,jdbcType=VARCHAR}
+        </if>
+        <if test="income != null">
+            ,income = #{income,jdbcType=VARCHAR}
+        </if>
+        <if test="skuQuota != null">
+            ,sku_quota = #{skuQuota,jdbcType=VARCHAR}
+        </if>
+        <if test="skuNumber != null">
+            ,sku_number = #{skuName,jdbcType=VARCHAR}
+        </if>
+        <if test="skuNumberVirtually != null">
+            ,sku_number_virtually = #{skuNumberVirtually,jdbcType=VARCHAR}
+        </if>
+        <if test="subordinateNumber != null">
+            ,subordinate_number = #{subordinateNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="giveMe != null">
+            ,give_me = #{giveMe,jdbcType=VARCHAR}
+        </if>
+        <if test="giveSuperior != null">
+            ,give_superior = #{giveSuperior,jdbcType=VARCHAR}
+        </if>
+        <if test="repurchaseMe != null">
+            ,repurchase_me = #{repurchaseMe,jdbcType=VARCHAR}
+        </if>
+        <if test="giveSuperiorIntegral != null">
+            ,give_superior_integral = #{giveSuperiorIntegral,jdbcType=VARCHAR}
+        </if>
+        <if test="repurchaseMeIntegral != null">
+            ,repurchase_me_integral = #{repurchaseMeIntegral,jdbcType=VARCHAR}
+        </if>
+        <if test="lotteryNumber != null">
+            ,lottery_number = #{lotteryNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="superiorLotteryNumber != null">
+            ,superior_lottery_number = #{superiorLotteryNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="dueForCollection != null">
+            ,due_for_collection = #{dueForCollection,jdbcType=VARCHAR}
+        </if>
+        <if test="endDate != null">
+            ,end_date = #{endDate,jdbcType=VARCHAR}
+        </if>
+        <if test="sort != null">
+            ,sort = #{sort,jdbcType=INTEGER}
+        </if>
+        <if test="give != null">
+            ,give = #{give,jdbcType=VARCHAR}
+        </if>
+        <if test="popular != null">
+            ,popular = #{popular,jdbcType=VARCHAR}
+        </if>
+        <if test="state != null">
+            ,state = #{state,jdbcType=VARCHAR}
+        </if>
+        <if test="skuDetails != null">
+            ,sku_details = #{skuDetails,jdbcType=VARCHARtails}
+        </if>
+        where sku_id = #{skuId,jdbcType=VARCHAR}
+    </update>
 </mapper>

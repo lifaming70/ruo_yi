@@ -49,7 +49,7 @@ public class SkuWeb {
     @PostMapping("/skuUpdate")
     public TableDataInfo skuUpdate(@RequestBody ZySku zySku) {
         try {
-            return service.getSku(zySku);
+            return service.skuUpdate(zySku);
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);
