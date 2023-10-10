@@ -32,14 +32,14 @@ public class ZyTicketController extends BaseController {
  */
 @PreAuthorize("@ss.hasPermi('system:ticket:list')")
 @GetMapping("/list")
-    public TableDataInfo list(@RequestParam String pageNumber,
+    public TableDataInfo list(@RequestParam String pageNum,
                               @RequestParam String pageSize,
                               @RequestParam String ticketName,
                               @RequestParam String ticketType) {
         startPage();
 
         ZyTicket zyTicket = new ZyTicket();
-        zyTicket.setPageNumber(pageNumber);
+        zyTicket.setPageNum(pageNum);
         zyTicket.setPageSize(pageSize);
         zyTicket.setTicketName(ticketName);
         zyTicket.setTicketType(ticketType);

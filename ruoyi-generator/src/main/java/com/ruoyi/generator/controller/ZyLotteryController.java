@@ -32,14 +32,14 @@ public class ZyLotteryController extends BaseController {
  */
 @PreAuthorize("@ss.hasPermi('system:lottery:list')")
 @GetMapping("/list")
-    public TableDataInfo list(@RequestParam String pageNumber,
+    public TableDataInfo list(@RequestParam String pageNum,
                               @RequestParam String pageSize,
                               @RequestParam String lotteryName,
                               @RequestParam String lotteryType) {
         startPage();
 
         ZyLottery zyLottery = new ZyLottery();
-        zyLottery.setPageNumber(pageNumber);
+        zyLottery.setPageNum(pageNum);
         zyLottery.setPageSize(pageSize);
         zyLottery.setLotteryName(lotteryName);
         zyLottery.setLotteryType(lotteryType);

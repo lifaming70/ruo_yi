@@ -59,7 +59,7 @@ private static final long serialVersionUID=1L;
     private String notes;
     /** 页数 */
             @Excel(name = "页数")
-    private String pageNumber;
+    private String pageNum;
     /** 条数 */
             @Excel(name = "条数")
     private String pageSize;
@@ -182,12 +182,12 @@ public String toString(){
         .toString();
         }
 
-            public String getPageNumber() {
-                return pageNumber;
+            public String getPageNum() {
+                return pageNum;
             }
 
-            public void setPageNumber(String pageNumber) {
-                this.pageNumber = pageNumber;
+            public void setPageNum(String pageNum) {
+                this.pageNum = pageNum;
             }
 
             public String getPageSize() {
