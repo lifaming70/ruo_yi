@@ -7,14 +7,7 @@ import com.ruoyi.generator.pojo.ZyTicket;
 import com.ruoyi.generator.service.IZyTicketService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -39,8 +32,18 @@ public class ZyTicketController extends BaseController {
  */
 @PreAuthorize("@ss.hasPermi('system:ticket:list')")
 @GetMapping("/list")
-    public TableDataInfo list(ZyTicket zyTicket) {
+    public TableDataInfo list(@RequestParam String pageNumber,
+                              @RequestParam String pageSize,
+                              @RequestParam String ticketName,
+                              @RequestParam String ticketType) {
         startPage();
+
+        ZyTicket zyTicket = new ZyTicket();
+        zyTicket.setPageNumber(pageNumber);
+        zyTicket.setPageSize(pageSize);
+        zyTicket.setTicketName(ticketName);
+        zyTicket.setTicketType(ticketType);
+
         List<ZyTicket> list = zyTicketService.selectZyTicketList(zyTicket);
         return getDataTable(list);
     }

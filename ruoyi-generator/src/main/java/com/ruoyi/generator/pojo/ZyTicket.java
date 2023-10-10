@@ -57,6 +57,12 @@ private static final long serialVersionUID=1L;
     /** 备注 */
             @Excel(name = "备注")
     private String notes;
+    /** 页数 */
+            @Excel(name = "页数")
+    private String pageNumber;
+    /** 条数 */
+            @Excel(name = "条数")
+    private String pageSize;
 
     public void setTicketId(Long ticketId)
             {
@@ -175,4 +181,20 @@ public String toString(){
             .append("notes",getNotes())
         .toString();
         }
+
+            public String getPageNumber() {
+                return pageNumber;
+            }
+
+            public void setPageNumber(String pageNumber) {
+                this.pageNumber = pageNumber;
+            }
+
+            public String getPageSize() {
+                return pageSize;
+            }
+
+            public void setPageSize(String pageSize) {
+                this.pageSize = pageSize;
+            }
         }
