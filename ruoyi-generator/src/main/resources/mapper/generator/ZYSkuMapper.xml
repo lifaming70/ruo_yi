@@ -125,6 +125,9 @@
         from zy_sku
         where 1=1
         <if test="skuName != null">
+            and sku_id = #{skuId,jdbcType=VARCHAR}
+        </if>
+        <if test="skuName != null">
             and sku_name like CONCAT('%', #{skuName,jdbcType=VARCHAR}, '%')
         </if>
         <if test="skuType != null">
