@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZyWinning {
 
-    private String winningId;
-    private String userId;
-    private String lotteryId;
-    private String createTime;
+    private Integer winningId;
+    private Integer userId;
+    private Integer lotteryId;
+    private Integer createTime;
 }

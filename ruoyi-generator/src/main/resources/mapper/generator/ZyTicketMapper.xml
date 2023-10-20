@@ -6,10 +6,11 @@
 
     <resultMap type="com.ruoyi.generator.pojo.ZyTicket" id="ZyTicketResult">
             <result property="ticketId" column="ticket_id"/>
-            <result property="ticketName" column="ticket_name"/>
-            <result property="ticketImage" column="ticket_image"/>
+            <result property="lotteryId" column="lottery_id"/>
+            <result property="lotteryName" column="lottery_name"/>
+            <result property="lotteryImage" column="lottery_image"/>
             <result property="probability" column="probability"/>
-            <result property="ticketType" column="ticket_type"/>
+            <result property="lotteryType" column="lottery_type"/>
             <result property="amountMin" column="amount_min"/>
             <result property="amountMax" column="amount_max"/>
             <result property="discount" column="discount"/>
@@ -20,24 +21,27 @@
     </resultMap>
 
     <sql id="selectZyTicketVo">
-        select ticket_id, ticket_name, ticket_image, probability, ticket_type, amount_min, amount_max, discount, state, create_time, sku_id, notes
+        select ticket_id, lottery_id,lotteryName, lotteryImage, probability, lotteryType, amount_min, amount_max, discount, state, create_time, sku_id, notes
         from zy_ticket
     </sql>
 
     <select id="selectZyTicketList" parameterType="com.ruoyi.generator.pojo.ZyTicket" resultMap="ZyTicketResult">
         <include refid="selectZyTicketVo"/>
         <where>
-                        <if test="ticketName != null  and ticketName != ''">
-                            and ticket_name like concat('%', #{ticketName}, '%')
+                        <if test="lotteryId != null  and lotteryId != ''">
+                            and lottery_id like concat('%', #{lotteryId}, '%')
                         </if>
-                        <if test="ticketImage != null  and ticketImage != ''">
-                            and ticket_image = #{ticketImage}
+                        <if test="lotteryName != null  and lotteryName != ''">
+                            and lottery_name like concat('%', #{lotteryName}, '%')
+                        </if>
+                        <if test="lotteryImage != null  and lotteryImage != ''">
+                            and lottery_image = #{lotteryImage}
                         </if>
                         <if test="probability != null  and probability != ''">
                             and probability = #{probability}
                         </if>
-                        <if test="ticketType != null  and ticketType != ''">
-                            and ticket_type = #{ticketType}
+                        <if test="lotteryType != null  and lotteryType != ''">
+                            and lottery_type = #{lotteryType}
                         </if>
                         <if test="amountMin != null  and amountMin != ''">
                             and amount_min = #{amountMin}
@@ -69,13 +73,15 @@
     <insert id="insertZyTicket" parameterType="com.ruoyi.generator.pojo.ZyTicket">
         insert into zy_ticket
         <trim prefix="(" suffix=")" suffixOverrides=",">
-                    <if test="ticketName != null and ticketName != ''">ticket_name,
+                    <if test="lotteryId != null and lotteryId != ''">lottery_id,
                     </if>
-                    <if test="ticketImage != null">ticket_image,
+                    <if test="lotteryName != null and lotteryName != ''">lottery_name,
+                    </if>
+                    <if test="lotteryImage != null">lottery_image,
                     </if>
                     <if test="probability != null">probability,
                     </if>
-                    <if test="ticketType != null">ticket_type,
+                    <if test="lotteryType != null">lottery_type,
                     </if>
                     <if test="amountMin != null">amount_min,
                     </if>
@@ -93,13 +99,15 @@
                     </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-                    <if test="ticketName != null and ticketName != ''">#{ticketName},
+                    <if test="lotteryId != null and lotteryId != ''">#{lotteryId},
                     </if>
-                    <if test="ticketImage != null">#{ticketImage},
+                    <if test="lotteryName != null and lotteryName != ''">#{lotteryName},
+                    </if>
+                    <if test="lotteryImage != null">#{lotteryImage},
                     </if>
                     <if test="probability != null">#{probability},
                     </if>
-                    <if test="ticketType != null">#{ticketType},
+                    <if test="lotteryType != null">#{lotteryType},
                     </if>
                     <if test="amountMin != null">#{amountMin},
                     </if>
@@ -121,17 +129,20 @@
     <update id="updateZyTicket" parameterType="com.ruoyi.generator.pojo.ZyTicket">
         update zy_ticket
         <trim prefix="SET" suffixOverrides=",">
-                    <if test="ticketName != null and ticketName != ''">ticket_name =
-                        #{ticketName},
+                    <if test="lotteryId != null and lotteryId != ''">lottery_id =
+                        #{lotteryId},
                     </if>
-                    <if test="ticketImage != null">ticket_image =
-                        #{ticketImage},
+                    <if test="lotteryName != null and lotteryName != ''">lottery_name =
+                        #{lotteryName},
+                    </if>
+                    <if test="lotteryImage != null">lottery_image =
+                        #{lotteryImage},
                     </if>
                     <if test="probability != null">probability =
                         #{probability},
                     </if>
-                    <if test="ticketType != null">ticket_type =
-                        #{ticketType},
+                    <if test="lotteryType != null">lottery_type =
+                        #{lotteryType},
                     </if>
                     <if test="amountMin != null">amount_min =
                         #{amountMin},
@@ -168,4 +179,20 @@
             #{ticketId}
         </foreach>
     </delete>
+
+    <select id="selectAll" resultType="com.ruoyi.generator.pojo.ZyTicket">
+        select ticket_id as ticketId,
+               lottery_id as lotteryId,
+               lottery_name as lotteryName,
+               lottery_image as lotteryImage,
+               probability,
+               lottery_type as lotteryType,
+               amount_min as amountMin,
+               amount_max as amountMax,
+               discount,
+               create_time as createTime,
+               sku_id as skuId,
+               notes
+        from zy_ticket where state = '1'
+    </select>
 </mapper>

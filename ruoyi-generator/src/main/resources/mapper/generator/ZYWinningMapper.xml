@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ZYWinningMapper">
+
+    <resultMap type="com.ruoyi.generator.pojo.ZyWinning" id="ZyWinningResult">
+            <result property="winningId" column="winning_id"/>
+            <result property="userId" column="user_id"/>
+            <result property="lotteryId" column="lottery_id"/>
+            <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectZyWinning">
+        select winning_id, user_id, lottery_id, create_time from zy_winning
+    </sql>
+
+    <select id="selectZyTicketList" parameterType="com.ruoyi.generator.pojo.ZyWinning" resultMap="ZyWinningResult">
+        <include refid="selectZyWinning"/>
+        <where>
+                        <if test="ticketName != null  and ticketName != ''">
+                            and ticket_name like concat('%', #{ticketName}, '%')
+                        </if>
+                        <if test="ticketImage != null  and ticketImage != ''">
+                            and ticket_image = #{ticketImage}
+                        </if>
+                        <if test="probability != null  and probability != ''">
+                            and probability = #{probability}
+                        </if>
+                        <if test="ticketType != null  and ticketType != ''">
+                            and ticket_type = #{ticketType}
+                        </if>
+                        <if test="amountMin != null  and amountMin != ''">
+                            and amount_min = #{amountMin}
+                        </if>
+                        <if test="amountMax != null  and amountMax != ''">
+                            and amount_max = #{amountMax}
+                        </if>
+                        <if test="discount != null  and discount != ''">
+                            and discount = #{discount}
+                        </if>
+                        <if test="state != null  and state != ''">
+                            and state = #{state}
+                        </if>
+                        <if test="skuId != null  and skuId != ''">
+                            and sku_id = #{skuId}
+                        </if>
+                        <if test="notes != null  and notes != ''">
+                            and notes = #{notes}
+                        </if>
+        </where>
+    </select>
+
+    <insert id="add">
+        insert into zy_winning (user_id,lottery_id,create_time)
+        values (#{userId,jdbcType=VARCHAR},#{lotteryId,jdbcType=VARCHAR},sysdate())
+    </insert>
+</mapper>
