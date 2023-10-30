@@ -70,7 +70,4 @@ private static final long serialVersionUID=1L;
     /** 条数 */
             @Excel(name = "条数")
     private String pageSize;
-    /** 标记 */
-            @Excel(name = "标记")
-    private Integer[] str;
         }
