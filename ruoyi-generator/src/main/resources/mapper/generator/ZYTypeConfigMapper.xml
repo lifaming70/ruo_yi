@@ -13,7 +13,10 @@
     </insert>
 
     <update id="deleteType">
-        update zy_type_config set type_state = '0' where type_id = #{typeId,jdbcType=VARCHAR}
+        update zy_type_config set type_state = '0' where type_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
     </update>
 
     <update id="updateType">
@@ -25,13 +28,13 @@
     <select id="getTypeList" resultType="com.ruoyi.generator.pojo.ZYTypeConfig">
         select type_id as typeId,
                type_name as typeName,
+               type_label as typeLabel,
                create_time as createTime
         from zy_type_config where type_state = '1'
         and  type_label = #{typeLabel,jdbcType=VARCHAR}
-        <if test="typeName != null">
+        <if test="typeName != null and typeName != ''">
             and type_name = #{typeName,jdbcType=VARCHAR}
         </if>
-        limit #{pageSize,jdbcType=INTEGER},#{pageNumber,jdbcType=INTEGER}
     </select>
 
     <select id="getType" resultType="com.ruoyi.generator.pojo.ZYTypeConfig">

@@ -19,7 +19,7 @@ public class ZyTicket extends BaseEntity
         {
 private static final long serialVersionUID=1L;
 
-    /** 转盘id */
+    /** 奖券id */
     private Long ticketId;
 
     /** 转盘id */

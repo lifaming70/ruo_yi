@@ -9,7 +9,7 @@ public interface ZYTypeConfigMapper {
 
     int insertType(ZYTypeConfig zyTypeConfig);
 
-    int deleteType(ZYTypeConfig zyTypeConfig);
+    int deleteType(List<String> list);
 
     int updateType(ZYTypeConfig zyTypeConfig);
 

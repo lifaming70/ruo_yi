@@ -34,8 +34,8 @@ public class ZyTicketController extends BaseController {
 @GetMapping("/list")
     public TableDataInfo list(@RequestParam String pageNum,
                               @RequestParam String pageSize,
-                              @RequestParam String lotteryName,
-                              @RequestParam String lotteryType) {
+                              @RequestParam(required = false) String lotteryName,
+                              @RequestParam(required = false) String lotteryType) {
         startPage();
 
         ZyTicket zyTicket = new ZyTicket();

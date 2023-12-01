@@ -30,7 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
                 zyArticleMapper.insertArticle(zyArticle);
                 break;
             case "2":
-                zyArticleMapper.deleteArticle(zyArticle);
+                zyArticleMapper.deleteArticle(zyArticle.getArticleIds());
                 break;
             case "3":
                 zyArticleMapper.updateArticle(zyArticle);

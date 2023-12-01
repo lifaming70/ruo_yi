@@ -9,7 +9,7 @@ public interface ZYArticleMapper {
 
     int insertArticle(ZYArticle zyArticle);
 
-    int deleteArticle(ZYArticle zyArticle);
+    int deleteArticle(List<String> list);
 
     int updateArticle(ZYArticle zyArticle);
 

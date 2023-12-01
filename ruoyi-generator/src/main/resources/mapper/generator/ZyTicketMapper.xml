@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="selectZyTicketVo">
-        select ticket_id, lottery_id,lotteryName, lotteryImage, probability, lotteryType, amount_min, amount_max, discount, state, create_time, sku_id, notes
+        select ticket_id, lottery_id,lottery_name, lottery_image, probability, lottery_type, amount_min, amount_max, discount, state, create_time, sku_id, notes
         from zy_ticket
     </sql>
 

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,4 +41,8 @@ public class ZYTypeConfig {
      * 页数
      */
     private Integer pageNumber;
+    /**
+     * 批量删除
+     */
+    private List<String> typeIds;
 }

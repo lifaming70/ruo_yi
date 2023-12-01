@@ -28,7 +28,7 @@ public class TypeServiceImpl implements TypeService {
                 zyTypeConfigMapper.insertType(zyTypeConfig);
                 break;
             case "2":
-                zyTypeConfigMapper.deleteType(zyTypeConfig);
+                zyTypeConfigMapper.deleteType(zyTypeConfig.getTypeIds());
                 break;
             case "3":
                 zyTypeConfigMapper.updateType(zyTypeConfig);
@@ -36,6 +36,12 @@ public class TypeServiceImpl implements TypeService {
             case "4":
                 PageHelper.startPage(zyTypeConfig.getPageNumber(),zyTypeConfig.getPageSize());
                 List<ZYTypeConfig> list = zyTypeConfigMapper.getTypeList(zyTypeConfig);
+
+                for (ZYTypeConfig zy : list) {
+                    if ("article".equals(zy.getTypeLabel())){
+                        zy.setTypeLabel("文章类型");
+                    }
+                }
 
                 return Result.getDataTable(list);
             case "5":

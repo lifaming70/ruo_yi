@@ -7,7 +7,7 @@
 <insert id="insertArticle">
     insert into zy_article (article_type,article_state,article_keyword,article_title,article_details,create_time) values
         (#{articleType,jdbcType=VARCHAR},
-        #{articleState,jdbcType=VARCHAR},
+        '1',
         #{articleKeyword,jdbcType=VARCHAR},
         #{articleTitle,jdbcType=VARCHAR},
         #{articleDetails,jdbcType=VARCHAR},
@@ -15,16 +15,26 @@
     </insert>
 
 <update id="deleteArticle">
-    update zy_article set article_state = '0' where article_id = #{articleId,jdbcType=VARCHAR}
+        update zy_article set article_state = '0' where article_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
     </update>
 
 <update id="updateArticle">
     update zy_article set
-        article_type = #{articleType,jdbcType=VARCHAR},
-        article_state = #{articleState,jdbcType=VARCHAR},
-        article_keyword = #{articleKeyword,jdbcType=VARCHAR},
-        article_title = #{articleTitle,jdbcType=VARCHAR},
-        article_details = #{articleDetails,jdbcType=VARCHAR}
+        <if test="articleType != null">
+            article_type = #{articleType,jdbcType=VARCHAR},
+        </if>
+        <if test="articleKeyword != null">
+            article_keyword = #{articleKeyword,jdbcType=VARCHAR},
+        </if>
+        <if test="articleTitle != null">
+            article_title = #{articleTitle,jdbcType=VARCHAR},
+        </if>
+        <if test="articleDetails != null">
+            article_details = #{articleDetails,jdbcType=VARCHAR}
+        </if>
     where article_id = #{articleId,jdbcType=VARCHAR}
     </update>
 
@@ -39,6 +49,9 @@
     from zy_article where article_state = '1'
     <if test="articleType != null">
         and article_type = #{articleType,jdbcType=VARCHAR}
+    </if>
+    <if test="articleTitle != null">
+        and article_title like concat('%', #{articleTitle,jdbcType=VARCHAR}, '%')
     </if>
     <if test="articleKeyword != null">
         and article_keyword = #{articleKeyword,jdbcType=VARCHAR}
