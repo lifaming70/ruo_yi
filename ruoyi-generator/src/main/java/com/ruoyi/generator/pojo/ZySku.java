@@ -19,6 +19,8 @@ public class ZySku {
      * 商品名称
      */
     private String skuName;
+
+    private String image;
     /**
      * 商品类型
      */
@@ -118,7 +120,9 @@ public class ZySku {
     /**
      * 商品图片信息
      */
-    private List<String> image;
+    private List<String> images;
+
+    private List<String> skuIds;
     /**
      * 条数
      */

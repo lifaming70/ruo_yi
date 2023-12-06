@@ -83,7 +83,7 @@ public class Result<T> implements Serializable {
     public static TableDataInfo getDataTable(List<?> list) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.SUCCESS);
-        rspData.setMsg("查询成功");
+        rspData.setMsg("SUCCESS");
         rspData.setRows(list);
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
@@ -96,7 +96,7 @@ public class Result<T> implements Serializable {
     public static TableDataInfo getDataTable() {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.SUCCESS);
-        rspData.setMsg("成功");
+        rspData.setMsg("SUCCESS");
         return rspData;
     }
 
@@ -107,7 +107,7 @@ public class Result<T> implements Serializable {
     public static TableDataInfo getError() {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.ERROR);
-        rspData.setMsg("系统异常");
+        rspData.setMsg("ERR");
         return rspData;
     }
 

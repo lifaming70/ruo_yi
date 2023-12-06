@@ -1,9 +1,14 @@
 package com.ruoyi.generator.service.impl;
 
 import java.util.List;
-        import com.ruoyi.common.utils.DateUtils;
+
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.generator.mapper.ZyLotteryMapper;
+import com.ruoyi.generator.mapper.ZyTicketMapper;
 import com.ruoyi.generator.pojo.ZyLottery;
+import com.ruoyi.generator.pojo.ZyTicket;
 import com.ruoyi.generator.service.IZyLotteryService;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,9 @@ import javax.annotation.Resource;
 public class ZyLotteryServiceImpl implements IZyLotteryService {
     @Resource
     ZyLotteryMapper zyLotteryMapper;
+
+    @Resource
+    ZyTicketMapper zyTicketMapper;
 
     /**
      * 查询【请填写功能名称】
@@ -38,8 +46,25 @@ public class ZyLotteryServiceImpl implements IZyLotteryService {
      * @return 【请填写功能名称】
      */
     @Override
-    public List<ZyLottery> selectZyLotteryList(ZyLottery zyLottery) {
-        return zyLotteryMapper.selectZyLotteryList(zyLottery);
+    public List<ZyLottery> selectZyLotteryList(ZyLottery zyLottery,String mark) {
+        List<ZyLottery> zyLotteries = zyLotteryMapper.selectZyLotteryList(zyLottery);
+
+
+        if (mark != null && mark.equals("1")){
+            List<ZyTicket> list = zyTicketMapper.selectAll();
+
+            for (ZyTicket zy : list) {
+                int lotteryId = zy.getLotteryId();
+                for (int i = 0; i < zyLotteries.size(); i++) {
+                    ZyLottery lottery = zyLotteries.get(i);
+                    if (lottery.getLotteryId() == lotteryId){
+                        zyLotteries.remove(i);
+                    }
+                }
+            }
+        }
+
+        return zyLotteries;
     }
 
     /**
@@ -50,8 +75,7 @@ public class ZyLotteryServiceImpl implements IZyLotteryService {
      */
     @Override
     public int insertZyLottery(ZyLottery zyLottery) {
-                zyLottery.setCreateTime(DateUtils.getNowDate());
-            return zyLotteryMapper.insertZyLottery(zyLottery);
+        return zyLotteryMapper.insertZyLottery(zyLottery);
     }
 
     /**
@@ -73,6 +97,7 @@ public class ZyLotteryServiceImpl implements IZyLotteryService {
      */
     @Override
     public int deleteZyLotteryByLotteryIds(Long[] lotteryIds) {
+        zyTicketMapper.deleteLotteryId(lotteryIds);
         return zyLotteryMapper.deleteZyLotteryByLotteryIds(lotteryIds);
     }
 

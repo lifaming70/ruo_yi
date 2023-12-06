@@ -53,7 +53,7 @@ public class ZyTicketController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:ticket:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
+    //@PostMapping("/export")
     public void export(HttpServletResponse response, ZyTicket zyTicket) {
         List<ZyTicket> list = zyTicketService.selectZyTicketList(zyTicket);
         ExcelUtil<ZyTicket> util = new ExcelUtil<ZyTicket>(ZyTicket. class);
@@ -74,7 +74,7 @@ public class ZyTicketController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:ticket:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
-    @PostMapping
+    @PostMapping("/batchAdd")
     public AjaxResult add(@RequestBody ZyTicket zyTicket) {
         return toAjax(zyTicketService.insertZyTicket(zyTicket));
     }

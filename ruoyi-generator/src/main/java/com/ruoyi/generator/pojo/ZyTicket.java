@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 【请填写功能名称】对象 zy_ticket
  *
@@ -53,10 +55,6 @@ private static final long serialVersionUID=1L;
             @Excel(name = "折扣卷")
     private String discount;
 
-    /** 0:失效，1:生效 */
-            @Excel(name = "0:失效，1:生效")
-    private String state;
-
     /** 产品名称 */
             @Excel(name = "产品名称")
     private String skuId;
@@ -70,4 +68,7 @@ private static final long serialVersionUID=1L;
     /** 条数 */
             @Excel(name = "条数")
     private String pageSize;
+    /** 奖券id集合 */
+            @Excel(name = "奖券id集合")
+    private List<String> lotteryIds;
         }

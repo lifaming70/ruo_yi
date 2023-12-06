@@ -36,6 +36,7 @@
     <sql id="Base_Column_List">
         sku_id,
         sku_name,
+        image,
         sku_type,
         vip,
         sku_price,
@@ -66,6 +67,7 @@
     insert into zy_sku
     (sku_id,
      sku_name,
+     image,
      sku_type,
      vip,
      sku_price,
@@ -122,18 +124,17 @@
     <select id="getSku" resultType="com.ruoyi.generator.pojo.ZySku" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from zy_sku
-        where 1=1
-        <if test="skuName != null">
+        from zy_sku where state in ('2','3')
+        <if test="skuId != null and skuId != ''">
             and sku_id = #{skuId,jdbcType=VARCHAR}
         </if>
-        <if test="skuName != null">
+        <if test="skuName != null and skuName != ''">
             and sku_name like CONCAT('%', #{skuName,jdbcType=VARCHAR}, '%')
         </if>
-        <if test="skuType != null">
+        <if test="skuType != null and skuType != ''">
             and sku_type = #{skuType,jdbcType=VARCHAR}
         </if>
-        <if test="vip != null">
+        <if test="vip != null and vip != ''">
             and vip = #{vip,jdbcType=VARCHAR}
         </if>
     </select>
@@ -142,6 +143,9 @@
         update zy_sku set sku_id = sku_id
         <if test="skuName != null">
             ,sku_name = #{skuName,jdbcType=VARCHAR}
+        </if>
+        <if test="image != null">
+            ,image = #{image,jdbcType=VARCHAR}
         </if>
         <if test="skuType != null">
             ,sku_type = #{skuType,jdbcType=VARCHAR}
@@ -201,7 +205,7 @@
             ,end_date = #{endDate,jdbcType=VARCHAR}
         </if>
         <if test="sort != null">
-            ,sort = #{sort,jdbcType=INTEGER}
+            ,sort = #{sort}
         </if>
         <if test="give != null">
             ,give = #{give,jdbcType=VARCHAR}
@@ -213,8 +217,15 @@
             ,state = #{state,jdbcType=VARCHAR}
         </if>
         <if test="skuDetails != null">
-            ,sku_details = #{skuDetails,jdbcType=VARCHARtails}
+            ,sku_details = #{skuDetails}
         </if>
         where sku_id = #{skuId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="deleteSkus">
+        update zy_sku set state = '1' where sku_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
     </update>
 </mapper>

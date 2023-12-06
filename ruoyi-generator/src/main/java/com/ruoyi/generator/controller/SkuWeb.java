@@ -56,4 +56,16 @@ public class SkuWeb {
             return Result.getError();
         }
     }
+
+    @Anonymous
+    @PostMapping("/skuDelete")
+    public TableDataInfo skuDelete(@RequestBody ZySku zySku) {
+        try {
+            return service.skuUpdate(zySku);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>>>>>>>服务异常");
+            log.error(e.getMessage(),e);
+            return Result.getError();
+        }
+    }
 }

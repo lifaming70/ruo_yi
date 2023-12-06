@@ -11,4 +11,6 @@ public interface SkuService {
     TableDataInfo getSku(ZySku zySku);
 
     TableDataInfo skuUpdate(ZySku zySku);
+
+    TableDataInfo skuDelete(ZySku zySku);
 }

@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +36,10 @@ public class ZyLotteryController extends BaseController {
     public TableDataInfo list(@RequestParam String pageNum,
                               @RequestParam String pageSize,
                               @RequestParam(required = false) String lotteryName,
-                              @RequestParam(required = false) String lotteryType) {
+                              @RequestParam(required = false) String lotteryType,
+                              @RequestParam(required = false) String skuId,
+                              @RequestParam(required = false) String expirationTime,
+                              @RequestParam(required = false) String mark) {
         startPage();
 
         ZyLottery zyLottery = new ZyLottery();
@@ -43,7 +47,9 @@ public class ZyLotteryController extends BaseController {
         zyLottery.setPageSize(pageSize);
         zyLottery.setLotteryName(lotteryName);
         zyLottery.setLotteryType(lotteryType);
-        List<ZyLottery> list = zyLotteryService.selectZyLotteryList(zyLottery);
+        zyLottery.setSkuId(skuId);
+        zyLottery.setExpirationTime(expirationTime);
+        List<ZyLottery> list = zyLotteryService.selectZyLotteryList(zyLottery,mark);
         return getDataTable(list);
     }
 
@@ -52,11 +58,11 @@ public class ZyLotteryController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:lottery:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
+    //@PostMapping("/export")
     public void export(HttpServletResponse response, ZyLottery zyLottery) {
-        List<ZyLottery> list = zyLotteryService.selectZyLotteryList(zyLottery);
+        /*List<ZyLottery> list = zyLotteryService.selectZyLotteryList(zyLottery);
         ExcelUtil<ZyLottery> util = new ExcelUtil<ZyLottery>(ZyLottery. class);
-        util.exportExcel(response, list, "【请填写功能名称】数据");
+        util.exportExcel(response, list, "【请填写功能名称】数据");*/
     }
 
     /**

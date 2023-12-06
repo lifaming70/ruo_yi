@@ -43,7 +43,7 @@ public class SkuServiceImpl implements SkuService {
         zySkuMapper.skuAdd(zySku);
 
         List<ZyImage> list = new ArrayList<>();
-        List<String> String = zySku.getImage();
+        List<String> String = zySku.getImages();
 
         for (String str : String) {
             ZyImage zyImage = new ZyImage();
@@ -62,12 +62,45 @@ public class SkuServiceImpl implements SkuService {
 
         PageHelper.startPage(zySku.getPageNumber(),zySku.getPageSize());
         List<ZySku> sku = zySkuMapper.getSku(zySku);
+
+        if (sku.isEmpty()){
+            return Result.getDataTable(sku);
+        }
+
+        List<String> list = new ArrayList<>();
+
+        for (ZySku zy : sku) {
+            list.add(zy.getSkuId());
+        }
+
+        List<ZyImage> image = zyImageMapper.getImage(list);
+
+        for (ZySku zy : sku) {
+            String skuId = zy.getSkuId();
+            List<String> stringList = new ArrayList<>();
+            for (int i = 0; i < image.size(); i++) {
+                ZyImage zyImage = image.get(i);
+                if (skuId.equals(zyImage.getSkuId())){
+                    String string = zyImage.getImage();
+                    stringList.add(string);
+                    image.remove(i);
+                    i--;
+                }
+            }
+            zy.setImages(stringList);
+        }
         return Result.getDataTable(sku);
     }
 
     @Override
     public TableDataInfo  skuUpdate(ZySku zySku) {
         zySkuMapper.updateSku(zySku);
+        return Result.getDataTable();
+    }
+
+    @Override
+    public TableDataInfo skuDelete(ZySku zySku) {
+        zySkuMapper.deleteSkus(zySku.getSkuIds());
         return Result.getDataTable();
     }
 }

@@ -28,6 +28,14 @@ public interface ZyLotteryMapper {
     public List<ZyLottery> selectZyLotteryList(ZyLottery zyLottery);
 
     /**
+     * 查询【请填写功能名称】列表
+     *
+     * @param list 【请填写功能名称】
+     * @return 【请填写功能名称】集合
+     */
+    public List<ZyLottery> selectList(List<String> list);
+
+    /**
      * 新增【请填写功能名称】
      *
      * @param zyLottery 【请填写功能名称】

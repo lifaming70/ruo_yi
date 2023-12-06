@@ -25,7 +25,7 @@ public interface IZyLotteryService {
      * @param zyLottery 【请填写功能名称】
      * @return 【请填写功能名称】集合
      */
-    public List<ZyLottery> selectZyLotteryList(ZyLottery zyLottery);
+    public List<ZyLottery> selectZyLotteryList(ZyLottery zyLottery,String mark);
 
     /**
      * 新增【请填写功能名称】

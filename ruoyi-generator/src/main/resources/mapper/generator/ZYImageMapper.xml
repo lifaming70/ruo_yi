@@ -11,4 +11,11 @@
             #{item.image,jdbcType=VARCHAR})
         </foreach>
     </select>
+
+    <select id="getImage" resultType="com.ruoyi.generator.pojo.ZyImage">
+        select sku_id as skuId, image from zy_image where sku_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </select>
 </mapper>

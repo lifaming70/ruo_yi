@@ -11,4 +11,6 @@ public interface ZYSkuMapper {
     List<ZySku> getSku(ZySku zySku);
 
     void updateSku(ZySku zySku);
+
+    void deleteSkus(List<String> list);
 }

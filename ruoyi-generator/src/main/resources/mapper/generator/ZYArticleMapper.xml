@@ -47,16 +47,16 @@
            article_details as articleDetails,
            create_time as createTime
     from zy_article where article_state = '1'
-    <if test="articleType != null">
+    <if test="articleType != null and articleType != ''">
         and article_type = #{articleType,jdbcType=VARCHAR}
     </if>
-    <if test="articleTitle != null">
+    <if test="articleTitle != null and articleTitle != ''">
         and article_title like concat('%', #{articleTitle,jdbcType=VARCHAR}, '%')
     </if>
-    <if test="articleKeyword != null">
+    <if test="articleKeyword != null and articleKeyword != ''">
         and article_keyword = #{articleKeyword,jdbcType=VARCHAR}
     </if>
-    <if test="createTime != null and endTime != null">
+    <if test="createTime != null and endTime != null and createTime != '' and endTime != ''">
         and create_time &gt;= #{createTime,jdbcType=VARCHAR}
         and create_time &lt;= #{endTime,jdbcType=VARCHAR}
     </if>

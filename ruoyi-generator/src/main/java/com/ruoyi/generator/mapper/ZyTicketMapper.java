@@ -1,6 +1,7 @@
 package com.ruoyi.generator.mapper;
 
 import com.ruoyi.generator.pojo.ZyTicket;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,10 +31,10 @@ public interface ZyTicketMapper {
     /**
      * 新增【请填写功能名称】
      *
-     * @param zyTicket 【请填写功能名称】
+     * @param list 【请填写功能名称】
      * @return 结果
      */
-    public int insertZyTicket(ZyTicket zyTicket);
+    public int insertZyTickets(List<ZyTicket> list);
 
     /**
      * 修改【请填写功能名称】
@@ -58,6 +59,8 @@ public interface ZyTicketMapper {
      * @return 结果
      */
     public int deleteZyTicketByTicketIds(Long[] ticketIds);
+
+    public int deleteLotteryId(Long[] lotteryIds);
 
     List<ZyTicket> selectAll();
 }

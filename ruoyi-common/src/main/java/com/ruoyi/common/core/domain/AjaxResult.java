@@ -1,10 +1,10 @@
 package com.ruoyi.common.core.domain;
 
-import java.util.HashMap;
-import java.util.Objects;
-
 import com.ruoyi.common.constant.HttpStatus;
 import com.ruoyi.common.utils.StringUtils;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * 操作消息提醒
@@ -67,7 +67,7 @@ public class AjaxResult extends HashMap<String, Object> {
      * @return 成功消息
      */
     public static AjaxResult success() {
-        return AjaxResult.success("操作成功");
+        return AjaxResult.success("SUCCESS");
     }
 
     /**
@@ -76,7 +76,7 @@ public class AjaxResult extends HashMap<String, Object> {
      * @return 成功消息
      */
     public static AjaxResult success(Object data) {
-        return AjaxResult.success("操作成功", data);
+        return AjaxResult.success("SUCCESS", data);
     }
 
     /**
@@ -127,7 +127,7 @@ public class AjaxResult extends HashMap<String, Object> {
      * @return 错误消息
      */
     public static AjaxResult error() {
-        return AjaxResult.error("操作失败");
+        return AjaxResult.error("ERR");
     }
 
     /**
