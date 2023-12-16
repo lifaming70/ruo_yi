@@ -137,6 +137,9 @@
         <if test="vip != null and vip != ''">
             and vip = #{vip,jdbcType=VARCHAR}
         </if>
+        <if test="popular != null and popular != ''">
+            and popular = #{popular,jdbcType=VARCHAR}
+        </if>
     </select>
 
     <update id="updateSku">

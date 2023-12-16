@@ -19,25 +19,39 @@
     </resultMap>
 
     <sql id="selectZyLotteryVo">
-        select lottery_id, lottery_name, lottery_type, probability,discount, money,sku_id, expiration_time, lottery_image, notes, state, create_time
+        select lottery_id, lottery_name, lottery_type, discount, money, sku_id, expiration_time, lottery_image, notes, state, create_time
         from zy_lottery
     </sql>
 
     <select id="selectZyLotteryList" parameterType="com.ruoyi.generator.pojo.ZyLottery" resultMap="ZyLotteryResult">
         <include refid="selectZyLotteryVo"/>
         <where>
-                        state = '1'
                         <if test="lotteryName != null  and lotteryName != ''">
                             and lottery_name like concat('%', #{lotteryName}, '%')
                         </if>
                         <if test="lotteryType != null  and lotteryType != ''">
                             and lottery_type = #{lotteryType}
                         </if>
+                        <if test="discount != null  and discount != ''">
+                            and discount = #{discount}
+                        </if>
+                        <if test="money != null  and money != ''">
+                            and money = #{money}
+                        </if>
                         <if test="skuId != null  and skuId != ''">
                             and sku_id = #{skuId}
                         </if>
-                        <if test="expirationTime != null  and expirationTime != ''">
+                        <if test="expirationTime != null ">
                             and expiration_time = #{expirationTime}
+                        </if>
+                        <if test="lotteryImage != null  and lotteryImage != ''">
+                            and lottery_image = #{lotteryImage}
+                        </if>
+                        <if test="notes != null  and notes != ''">
+                            and notes = #{notes}
+                        </if>
+                        <if test="state != null  and state != ''">
+                            and state = #{state}
                         </if>
         </where>
     </select>
@@ -45,7 +59,7 @@
     <select id="selectZyLotteryByLotteryId" parameterType="Long"
             resultMap="ZyLotteryResult">
             <include refid="selectZyLotteryVo"/>
-            where state = '1' and lottery_id = #{lotteryId}
+            where lottery_id = #{lotteryId}
     </select>
 
     <insert id="insertZyLottery" parameterType="com.ruoyi.generator.pojo.ZyLottery">
@@ -56,9 +70,6 @@
                     </if>
                     <if test="lotteryType != null">
                         lottery_type,
-                    </if>
-                    <if test="probability != null">
-                        probability,
                     </if>
                     <if test="discount != null">
                         discount,
@@ -78,16 +89,17 @@
                     <if test="notes != null">
                         notes,
                     </if>
-                    state,
-                    create_time,
-
+                    <if test="state != null">
+                        state,
+                    </if>
+                    <if test="createTime != null">
+                        create_time,
+                    </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                     <if test="lotteryName != null">#{lotteryName},
                     </if>
                     <if test="lotteryType != null">#{lotteryType},
-                    </if>
-                    <if test="probability != null">#{probability},
                     </if>
                     <if test="discount != null">#{discount},
                     </if>
@@ -101,8 +113,10 @@
                     </if>
                     <if test="notes != null">#{notes},
                     </if>
-                    '1',
-                    sysdate()
+                    <if test="state != null">#{state},
+                    </if>
+                    <if test="createTime != null">#{createTime},
+                    </if>
         </trim>
     </insert>
 
@@ -112,8 +126,8 @@
                     <if test="lotteryName != null">
                         lottery_name = #{lotteryName},
                     </if>
-                    <if test="probability != null">
-                        probability = #{probability},
+                    <if test="lotteryType != null">
+                        lottery_type = #{lotteryType},
                     </if>
                     <if test="discount != null">
                         discount = #{discount},
@@ -133,26 +147,24 @@
                     <if test="notes != null">
                         notes = #{notes},
                     </if>
+                    <if test="state != null">
+                        state = #{state},
+                    </if>
+                    <if test="createTime != null">
+                        create_time = #{createTime},
+                    </if>
         </trim>
         where lottery_id = #{lotteryId}
     </update>
 
-    <update id="deleteZyLotteryByLotteryId" parameterType="Long">
-        update zy_lottery set state = '0' where lottery_id = #{lotteryId}
-    </update>
+    <delete id="deleteZyLotteryByLotteryId" parameterType="Long">
+        delete from zy_lottery where lottery_id = #{lotteryId}
+    </delete>
 
-    <update id="deleteZyLotteryByLotteryIds" parameterType="String">
-        delete from zy_lottery  where lottery_id in
+    <delete id="deleteZyLotteryByLotteryIds" parameterType="String">
+        delete from zy_lottery where lottery_id in
         <foreach item="lotteryId" collection="array" open="(" separator="," close=")">
             #{lotteryId}
         </foreach>
-    </update>
-
-    <select id="selectList" resultMap="ZyLotteryResult">
-        select lottery_id, lottery_name, lottery_type, probability,discount, money,sku_id, expiration_time, lottery_image, notes, state, create_time
-        from zy_lottery where state = '1' and lottery_id in
-        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item,jdbcType=VARCHAR}
-        </foreach>
-    </select>
+    </delete>
 </mapper>

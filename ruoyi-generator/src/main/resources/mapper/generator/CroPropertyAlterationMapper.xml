@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.CroPropertyAlterationMapper">
+
+    <resultMap type="com.ruoyi.generator.domain.CroPropertyAlteration" id="CroPropertyAlterationResult">
+            <result property="id" column="id"/>
+            <result property="croPropertyId" column="cro_property_id"/>
+            <result property="alterationType" column="alteration_type"/>
+            <result property="quota" column="quota"/>
+            <result property="frontQuota" column="front_quota"/>
+            <result property="laterQuota" column="later_quota"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="createBy" column="create_by"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+    <sql id="selectCroPropertyAlterationVo">
+        select id, cro_property_id, alteration_type, quota, front_quota, later_quota, create_time, update_time, create_by, update_by, is_delete
+        from cro_property_alteration
+    </sql>
+
+    <select id="selectCroPropertyAlterationList" parameterType="com.ruoyi.generator.domain.CroPropertyAlteration" resultMap="CroPropertyAlterationResult">
+        select a.id, a.cro_property_id, a.alteration_type, a.quota, a.front_quota, a.later_quota, a.create_time, a.update_time, a.create_by, a.update_by, a.is_delete
+        from cro_property_alteration a
+        <where>
+                        <if test="croPropertyId != null ">
+                            and a.cro_property_id = #{croPropertyId}
+                        </if>
+                        <if test="alterationType != null  and alterationType != ''">
+                            and a.alteration_type = #{alterationType}
+                        </if>
+                        <if test="quota != null  and quota != ''">
+                            and a.quota = #{quota}
+                        </if>
+                        <if test="frontQuota != null  and frontQuota != ''">
+                            and a.front_quota = #{frontQuota}
+                        </if>
+                        <if test="laterQuota != null  and laterQuota != ''">
+                            and a.later_quota = #{laterQuota}
+                        </if>
+                        <if test="isDelete != null ">
+                            and a.is_delete = #{isDelete}
+                        </if>
+        </where>
+    </select>
+
+    <select id="selectCroPropertyAlterationById" parameterType="Long"
+            resultMap="CroPropertyAlterationResult">
+            <include refid="selectCroPropertyAlterationVo"/>
+            where id = #{id}
+    </select>
+
+    <insert id="insertCroPropertyAlteration" parameterType="com.ruoyi.generator.domain.CroPropertyAlteration" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into cro_property_alteration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="croPropertyId != null">cro_property_id,
+                    </if>
+                    <if test="alterationType != null">alteration_type,
+                    </if>
+                    <if test="quota != null">quota,
+                    </if>
+                    <if test="frontQuota != null">front_quota,
+                    </if>
+                    <if test="laterQuota != null">later_quota,
+                    </if>
+                    <if test="createTime != null">create_time,
+                    </if>
+                    <if test="updateTime != null">update_time,
+                    </if>
+                    <if test="createBy != null">create_by,
+                    </if>
+                    <if test="updateBy != null">update_by,
+                    </if>
+                    <if test="isDelete != null">is_delete,
+                    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="croPropertyId != null">#{croPropertyId},
+                    </if>
+                    <if test="alterationType != null">#{alterationType},
+                    </if>
+                    <if test="quota != null">#{quota},
+                    </if>
+                    <if test="frontQuota != null">#{frontQuota},
+                    </if>
+                    <if test="laterQuota != null">#{laterQuota},
+                    </if>
+                    <if test="createTime != null">#{createTime},
+                    </if>
+                    <if test="updateTime != null">#{updateTime},
+                    </if>
+                    <if test="createBy != null">#{createBy},
+                    </if>
+                    <if test="updateBy != null">#{updateBy},
+                    </if>
+                    <if test="isDelete != null">#{isDelete},
+                    </if>
+        </trim>
+    </insert>
+
+    <update id="updateCroPropertyAlteration" parameterType="com.ruoyi.generator.domain.CroPropertyAlteration">
+        update cro_property_alteration
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="croPropertyId != null">cro_property_id =
+                        #{croPropertyId},
+                    </if>
+                    <if test="alterationType != null">alteration_type =
+                        #{alterationType},
+                    </if>
+                    <if test="quota != null">quota =
+                        #{quota},
+                    </if>
+                    <if test="frontQuota != null">front_quota =
+                        #{frontQuota},
+                    </if>
+                    <if test="laterQuota != null">later_quota =
+                        #{laterQuota},
+                    </if>
+                    <if test="createTime != null">create_time =
+                        #{createTime},
+                    </if>
+                    <if test="updateTime != null">update_time =
+                        #{updateTime},
+                    </if>
+                    <if test="createBy != null">create_by =
+                        #{createBy},
+                    </if>
+                    <if test="updateBy != null">update_by =
+                        #{updateBy},
+                    </if>
+                    <if test="isDelete != null">is_delete =
+                        #{isDelete},
+                    </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCroPropertyAlterationById" parameterType="Long">
+        delete from cro_property_alteration where id = #{id}
+    </delete>
+
+    <delete id="deleteCroPropertyAlterationByIds" parameterType="String">
+        delete from cro_property_alteration where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
