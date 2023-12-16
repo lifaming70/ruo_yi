@@ -61,7 +61,8 @@ public class SkuWeb {
     @PostMapping("/skuDelete")
     public TableDataInfo skuDelete(@RequestBody ZySku zySku) {
         try {
-            return service.skuUpdate(zySku);
+            //return service.skuUpdate(zySku);
+            return null;
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);
