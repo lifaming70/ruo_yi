@@ -95,7 +95,7 @@
     values
     (#{skuId,jdbcType=VARCHAR},
     #{skuName,jdbcType=VARCHAR},
-    #{image,jdbcType=VARCHAR}
+    #{image,jdbcType=VARCHAR},
     #{skuType,jdbcType=VARCHAR},
     #{vip,jdbcType=VARCHAR},
     #{skuPrice,jdbcType=VARCHAR},
