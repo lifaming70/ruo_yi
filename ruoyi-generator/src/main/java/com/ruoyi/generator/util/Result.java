@@ -103,6 +103,16 @@ public class Result<T> implements Serializable {
     /**
      * 响应无数据返回
      */
+    public static TableDataInfo getDataTable(String str) {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setMsg(str);
+        return rspData;
+    }
+
+    /**
+     * 响应无数据返回
+     */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static TableDataInfo getError() {
         TableDataInfo rspData = new TableDataInfo();
