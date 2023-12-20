@@ -1,8 +1,9 @@
 package com.ruoyi.generator.service;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 public interface PromotionService {
 
-    public TableDataInfo promotion(String userId);
+    public AjaxResult promotion(String userId, String phone);
 }

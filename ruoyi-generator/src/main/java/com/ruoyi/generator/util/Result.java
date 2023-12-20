@@ -100,15 +100,6 @@ public class Result<T> implements Serializable {
         return rspData;
     }
 
-    /**
-     * 响应无数据返回
-     */
-    public static TableDataInfo getDataTable(String str) {
-        TableDataInfo rspData = new TableDataInfo();
-        rspData.setCode(HttpStatus.SUCCESS);
-        rspData.setMsg(str);
-        return rspData;
-    }
 
     /**
      * 响应无数据返回
