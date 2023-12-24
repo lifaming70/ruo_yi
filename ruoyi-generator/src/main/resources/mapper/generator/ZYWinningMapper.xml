@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.generator.mapper.ZYWinningMapper">
 
-    <resultMap type="com.ruoyi.generator.pojo.ZyWinning" id="ZyWinningResult">
+    <resultMap type="com.ruoyi.generator.domain.ZyWinning" id="ZyWinningResult">
             <result property="winningId" column="winning_id"/>
             <result property="userId" column="user_id"/>
             <result property="lotteryId" column="lottery_id"/>
@@ -15,7 +15,7 @@
         select winning_id, user_id, lottery_id, create_time from zy_winning
     </sql>
 
-    <select id="selectZyTicketList" parameterType="com.ruoyi.generator.pojo.ZyWinning" resultMap="ZyWinningResult">
+    <select id="selectZyTicketList" parameterType="com.ruoyi.generator.domain.ZyWinning" resultMap="ZyWinningResult">
         <include refid="selectZyWinning"/>
         <where>
                         <if test="ticketName != null  and ticketName != ''">

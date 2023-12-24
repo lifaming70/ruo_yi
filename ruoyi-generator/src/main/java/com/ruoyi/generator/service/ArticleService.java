@@ -1,7 +1,7 @@
 package com.ruoyi.generator.service;
 
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.generator.pojo.ZYArticle;
+import com.ruoyi.generator.domain.ZYArticle;
 
 public interface ArticleService {
 

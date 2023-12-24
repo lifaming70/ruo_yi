@@ -1,4 +1,4 @@
-package com.ruoyi.generator.pojo;
+package com.ruoyi.generator.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

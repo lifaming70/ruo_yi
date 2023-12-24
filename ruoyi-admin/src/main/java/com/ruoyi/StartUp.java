@@ -23,7 +23,7 @@ public class StartUp implements CommandLineRunner {
     public void run(String... args) {
         log.info("IndexStartupRunner >>>>>>>>>>>>>>>服务启动执行，执行加载数据等操作 <<<<<<<<<<<<<");
         //redis缓存持久化数据
-        stringRedisTemplate.opsForValue().set("promotionURL","https://www.baidu.com/");
+        stringRedisTemplate.opsForValue().set("promotionURL","https://dl.hdslb.com/mobile/fixed/pc_electron_mac/bili_mac.dmg?v=1.13.0");
         log.info("IndexStartupRunner >>>>>>>>>>>>>>> redis缓存结束 <<<<<<<<<<<<<");
         System.out.println("(♥◠‿◠)ﾉﾞ  若依启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
                 " .-------.       ____     __        \n" +

@@ -3,16 +3,14 @@ package com.ruoyi.generator.service.impl;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.generator.domain.ZYArticle;
 import com.ruoyi.generator.mapper.ZYArticleMapper;
-import com.ruoyi.generator.pojo.ZYArticle;
 import com.ruoyi.generator.service.ArticleService;
 import com.ruoyi.generator.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service

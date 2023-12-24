@@ -1,8 +1,7 @@
 package com.ruoyi.generator.service;
 
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.generator.pojo.ZySku;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.ruoyi.generator.domain.ZySku;
 
 public interface SkuService {
 

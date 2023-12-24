@@ -1,6 +1,6 @@
 package com.ruoyi.generator.mapper;
 
-import com.ruoyi.generator.pojo.ZyImage;
+import com.ruoyi.generator.domain.ZyImage;
 
 import java.util.List;
 

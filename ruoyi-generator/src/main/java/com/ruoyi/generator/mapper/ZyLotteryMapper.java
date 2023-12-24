@@ -1,8 +1,8 @@
 package com.ruoyi.generator.mapper;
 
-import java.util.List;
+import com.ruoyi.generator.domain.ZyLottery;
 
-import com.ruoyi.generator.pojo.ZyLottery;
+import java.util.List;
 
 /**
  * 【请填写功能名称】Mapper接口

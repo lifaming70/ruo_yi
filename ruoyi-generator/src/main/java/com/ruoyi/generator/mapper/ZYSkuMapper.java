@@ -1,6 +1,6 @@
 package com.ruoyi.generator.mapper;
 
-import com.ruoyi.generator.pojo.ZySku;
+import com.ruoyi.generator.domain.ZySku;
 
 import java.util.List;
 

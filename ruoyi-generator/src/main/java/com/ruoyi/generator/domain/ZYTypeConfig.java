@@ -1,4 +1,4 @@
-package com.ruoyi.generator.pojo;
+package com.ruoyi.generator.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -11,40 +11,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ZYArticle {
+public class ZYTypeConfig {
 
     /**
-     * 文章id
+     * 类型id
      */
-    private String articleId;
+    private String typeId;
     /**
-     * 文章分类
+     * 类型名称
      */
-    private String articleType;
+    private String typeName;
     /**
-     * 0:不显示，1:显示
+     * 是否生效，0：失效，1：生效
      */
-    private String articleState;
+    private String typeState;
     /**
-     * 文章关键词
+     * 类型标签
      */
-    private String articleKeyword;
-    /**
-     * 文章标题
-     */
-    private String articleTitle;
-    /**
-     * 文章详情
-     */
-    private String articleDetails;
+    private String typeLabel;
     /**
      * 创建时间
      */
     private String createTime;
-    /**
-     * 结束时间
-     */
-    private String endTime;
     /**
      * 条数
      */
@@ -56,5 +44,5 @@ public class ZYArticle {
     /**
      * 批量删除
      */
-    private List<String> articleIds;
+    private List<String> typeIds;
 }

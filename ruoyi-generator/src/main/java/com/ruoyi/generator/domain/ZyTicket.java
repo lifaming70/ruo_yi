@@ -1,4 +1,4 @@
-package com.ruoyi.generator.pojo;
+package com.ruoyi.generator.domain;
 
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;

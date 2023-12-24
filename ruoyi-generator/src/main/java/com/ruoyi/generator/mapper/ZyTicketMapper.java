@@ -1,7 +1,6 @@
 package com.ruoyi.generator.mapper;
 
-import com.ruoyi.generator.pojo.ZyTicket;
-import org.apache.ibatis.annotations.Param;
+import com.ruoyi.generator.domain.ZyTicket;
 
 import java.util.List;
 

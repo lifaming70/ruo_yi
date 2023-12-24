@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.generator.mapper.ZYSkuMapper">
 
-    <resultMap id="BaseResultMap" type="com.ruoyi.generator.pojo.ZySku">
+    <resultMap id="BaseResultMap" type="com.ruoyi.generator.domain.ZySku">
         <result column="sku_id" property="skuId" jdbcType="VARCHAR"/>
         <result column="sku_name" property="skuName" jdbcType="VARCHAR"/>
         <result column="sku_type" property="skuType" jdbcType="VARCHAR"/>
@@ -122,7 +122,7 @@
     #{skuDetails,jdbcType=VARCHAR})
     </insert>
 
-    <select id="getSku" resultType="com.ruoyi.generator.pojo.ZySku" resultMap="BaseResultMap">
+    <select id="getSku" resultType="com.ruoyi.generator.domain.ZySku" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from zy_sku where state in ('2','3')

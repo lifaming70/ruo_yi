@@ -3,15 +3,13 @@ package com.ruoyi.generator.service.impl;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.generator.domain.ZYTypeConfig;
 import com.ruoyi.generator.mapper.ZYTypeConfigMapper;
-import com.ruoyi.generator.pojo.ZYTypeConfig;
 import com.ruoyi.generator.service.TypeService;
 import com.ruoyi.generator.util.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service

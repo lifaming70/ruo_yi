@@ -1,6 +1,6 @@
 package com.ruoyi.generator.mapper;
 
-import com.ruoyi.generator.pojo.ZYArticle;
+import com.ruoyi.generator.domain.ZYArticle;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

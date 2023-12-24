@@ -2,7 +2,7 @@ package com.ruoyi.generator.controller;
 
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.generator.pojo.ZySku;
+import com.ruoyi.generator.domain.ZySku;
 import com.ruoyi.generator.service.SkuService;
 import com.ruoyi.generator.util.Result;
 import lombok.extern.slf4j.Slf4j;

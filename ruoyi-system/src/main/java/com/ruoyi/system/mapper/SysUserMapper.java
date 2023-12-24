@@ -1,8 +1,9 @@
 package com.ruoyi.system.mapper;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户表 数据层
@@ -84,6 +85,22 @@ public interface SysUserMapper
      * @return 结果
      */
     public int resetUserPwd(@Param("userName") String userName, @Param("password") String password);
+
+    /**
+     * 查询抽奖次数
+     *
+     * @param userId 用户id
+     * @return 结果
+     */
+    public int selectNumber(@Param("userId") String userId);
+
+    /**
+     * 修改抽奖次数
+     *
+     * @param userId 用户id
+     * @return 结果
+     */
+    public int updateNumber(SysUser sysUser);
 
     /**
      * 通过用户ID删除用户

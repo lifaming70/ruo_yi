@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.generator.mapper.ZyLotteryMapper">
 
-    <resultMap type="com.ruoyi.generator.pojo.ZyLottery" id="ZyLotteryResult">
+    <resultMap type="com.ruoyi.generator.domain.ZyLottery" id="ZyLotteryResult">
             <result property="lotteryId" column="lottery_id"/>
             <result property="lotteryName" column="lottery_name"/>
             <result property="lotteryType" column="lottery_type"/>
@@ -23,7 +23,7 @@
         from zy_lottery
     </sql>
 
-    <select id="selectZyLotteryList" parameterType="com.ruoyi.generator.pojo.ZyLottery" resultMap="ZyLotteryResult">
+    <select id="selectZyLotteryList" parameterType="com.ruoyi.generator.domain.ZyLottery" resultMap="ZyLotteryResult">
         <include refid="selectZyLotteryVo"/>
         <where>
                         state = '1'
@@ -48,7 +48,7 @@
             where state = '1' and lottery_id = #{lotteryId}
     </select>
 
-    <insert id="insertZyLottery" parameterType="com.ruoyi.generator.pojo.ZyLottery">
+    <insert id="insertZyLottery" parameterType="com.ruoyi.generator.domain.ZyLottery">
         insert into zy_lottery
         <trim prefix="(" suffix=")" suffixOverrides=",">
                     <if test="lotteryName != null">
@@ -106,7 +106,7 @@
         </trim>
     </insert>
 
-    <update id="updateZyLottery" parameterType="com.ruoyi.generator.pojo.ZyLottery">
+    <update id="updateZyLottery" parameterType="com.ruoyi.generator.domain.ZyLottery">
         update zy_lottery
         <trim prefix="SET" suffixOverrides=",">
                     <if test="lotteryName != null">

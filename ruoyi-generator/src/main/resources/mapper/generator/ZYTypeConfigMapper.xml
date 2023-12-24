@@ -25,7 +25,7 @@
         where type_id = #{typeId,jdbcType=VARCHAR}
     </update>
 
-    <select id="getTypeList" resultType="com.ruoyi.generator.pojo.ZYTypeConfig">
+    <select id="getTypeList" resultType="com.ruoyi.generator.domain.ZYTypeConfig">
         select type_id as typeId,
                type_name as typeName,
                type_label as typeLabel,
@@ -37,7 +37,7 @@
         </if>
     </select>
 
-    <select id="getType" resultType="com.ruoyi.generator.pojo.ZYTypeConfig">
+    <select id="getType" resultType="com.ruoyi.generator.domain.ZYTypeConfig">
         select type_id as typeId,
                type_name as typeName,
                create_time as createTime

@@ -3,8 +3,8 @@ package com.ruoyi.generator.service.impl;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.generator.mapper.ZyLotteryMapper;
 import com.ruoyi.generator.mapper.ZyTicketMapper;
-import com.ruoyi.generator.pojo.ZyLottery;
-import com.ruoyi.generator.pojo.ZyTicket;
+import com.ruoyi.generator.domain.ZyLottery;
+import com.ruoyi.generator.domain.ZyTicket;
 import com.ruoyi.generator.service.IZyTicketService;
 import org.springframework.stereotype.Service;
 

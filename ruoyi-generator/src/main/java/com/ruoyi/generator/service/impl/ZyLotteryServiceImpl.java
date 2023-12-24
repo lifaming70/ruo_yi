@@ -1,18 +1,14 @@
 package com.ruoyi.generator.service.impl;
 
-import java.util.List;
-
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.generator.domain.ZyLottery;
+import com.ruoyi.generator.domain.ZyTicket;
 import com.ruoyi.generator.mapper.ZyLotteryMapper;
 import com.ruoyi.generator.mapper.ZyTicketMapper;
-import com.ruoyi.generator.pojo.ZyLottery;
-import com.ruoyi.generator.pojo.ZyTicket;
 import com.ruoyi.generator.service.IZyLotteryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 【请填写功能名称】Service业务层处理

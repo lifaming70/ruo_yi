@@ -1,6 +1,6 @@
 package com.ruoyi.generator.mapper;
 
-import com.ruoyi.generator.pojo.ZyWinning;
+import com.ruoyi.generator.domain.ZyWinning;
 
 /**
  * 【请填写功能名称】Mapper接口

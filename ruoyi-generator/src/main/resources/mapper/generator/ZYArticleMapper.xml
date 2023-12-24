@@ -38,7 +38,7 @@
     where article_id = #{articleId,jdbcType=VARCHAR}
     </update>
 
-<select id="getArticleList" resultType="com.ruoyi.generator.pojo.ZYArticle">
+<select id="getArticleList" resultType="com.ruoyi.generator.domain.ZYArticle">
     select article_id as articleId,
            article_type as articleType,
            article_state as articleState,
@@ -63,7 +63,7 @@
 
     </select>
 
-<select id="getArticle" resultType="com.ruoyi.generator.pojo.ZYArticle">
+<select id="getArticle" resultType="com.ruoyi.generator.domain.ZYArticle">
     select article_id as articleId,
            article_type as articleType,
            article_state as articleState,

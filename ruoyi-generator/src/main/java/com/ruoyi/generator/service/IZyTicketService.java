@@ -2,7 +2,7 @@ package com.ruoyi.generator.service;
 
 import java.util.List;
 
-import com.ruoyi.generator.pojo.ZyTicket;
+import com.ruoyi.generator.domain.ZyTicket;
 
 /**
  * 【请填写功能名称】Service接口

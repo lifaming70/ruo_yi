@@ -1,17 +1,19 @@
 package com.ruoyi.common.core.domain.entity;
 
-import java.util.Date;
-import java.util.List;
-import javax.validation.constraints.*;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.annotation.Excels;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.xss.Xss;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象 sys_user
@@ -38,6 +40,18 @@ public class SysUser extends BaseEntity {
      */
     @Excel(name = "登录名称")
     private String userName;
+
+    /**
+     * 用户资金
+     */
+    @Excel(name = "用户资金")
+    private String fund;
+
+    /**
+     * 用户类型
+     */
+    @Excel(name = "用户类型（00系统用户）")
+    private String userType;
 
     /**
      * 用户昵称
@@ -106,6 +120,11 @@ public class SysUser extends BaseEntity {
     private SysDept dept;
 
     /**
+     * 上下级对象
+     */
+    private ZYTeam zyTeam;
+
+    /**
      * 角色对象
      */
     private List<SysRole> roles;
@@ -124,6 +143,11 @@ public class SysUser extends BaseEntity {
      * 角色ID
      */
     private Long roleId;
+
+    /**
+     * 角色ID
+     */
+    private Integer number;
 
     public SysUser() {
 
@@ -176,6 +200,22 @@ public class SysUser extends BaseEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getFund() {
+        return fund;
+    }
+
+    public void setFund(String fund) {
+        this.fund = fund;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     @Email(message = "邮箱格式不正确")
@@ -261,6 +301,14 @@ public class SysUser extends BaseEntity {
         this.dept = dept;
     }
 
+    public ZYTeam getZyTeam() {
+        return zyTeam;
+    }
+
+    public void setZyTeam(ZYTeam zyTeam) {
+        this.zyTeam = zyTeam;
+    }
+
     public List<SysRole> getRoles() {
         return roles;
     }
@@ -293,12 +341,22 @@ public class SysUser extends BaseEntity {
         this.roleId = roleId;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("userId", getUserId())
                 .append("deptId", getDeptId())
                 .append("userName", getUserName())
+                .append("fund", getFund())
+                .append("userType", getUserType())
                 .append("nickName", getNickName())
                 .append("email", getEmail())
                 .append("phonenumber", getPhonenumber())
@@ -313,6 +371,7 @@ public class SysUser extends BaseEntity {
                 .append("createTime", getCreateTime())
                 .append("updateBy", getUpdateBy())
                 .append("updateTime", getUpdateTime())
+                .append("number", getNumber())
                 .append("remark", getRemark())
                 .append("dept", getDept())
                 .toString();
