@@ -2,7 +2,10 @@ package com.ruoyi.generator.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.generator.domain.ZyLottery;
 import com.ruoyi.generator.mapper.ZYWinningMapper;
+import com.ruoyi.generator.mapper.ZyLotteryMapper;
 import com.ruoyi.generator.mapper.ZyTicketMapper;
 import com.ruoyi.generator.domain.ZyTicket;
 import com.ruoyi.generator.domain.ZyWinning;
@@ -21,6 +24,9 @@ public class WinningServiceImpl implements WinningService {
 
     @Resource
     ZyTicketMapper zyTicketMapper;
+
+    @Resource
+    ZyLotteryMapper zyLotteryMapper;
 
     @Resource
     ZYWinningMapper zyWinningMapper;
@@ -59,5 +65,32 @@ public class WinningServiceImpl implements WinningService {
         zyWinningMapper.add(zyWinning);
 
         return Result.success(zyTicket);
+    }
+
+    @Override
+    public TableDataInfo coupon(String userId) {
+        List<String> stringList = zyWinningMapper.getLotteryList(userId);
+
+        List<ZyLottery> lotteryList = zyLotteryMapper.selectList(stringList);
+
+        int sum = 0;
+
+        for (int i = 0; i < lotteryList.size(); i++) {
+            ZyLottery zyLottery = lotteryList.get(i);
+            String id = String.valueOf(zyLottery.getLotteryId());
+            for (int j = 0; j < stringList.size(); j++) {
+                String lotteryId = stringList.get(j);
+                if (lotteryId.equals(id)){
+                    sum++;
+                    stringList.remove(j);
+                    j--;
+                }
+            }
+            zyLottery.setNumber(sum);
+            sum = 0;
+        }
+
+
+        return Result.getDataTable(lotteryList);
     }
 }

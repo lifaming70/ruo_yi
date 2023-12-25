@@ -1,7 +1,9 @@
 package com.ruoyi.generator.controller;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.generator.service.WinningService;
 import com.ruoyi.generator.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,18 @@ public class WinningWeb {
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);
             return Result.error();
+        }
+    }
+
+    @PostMapping("/coupon")
+    public TableDataInfo coupon(@RequestBody String userId) {
+        try {
+            String string = JSONObject.parseObject(userId).get("userId").toString();
+            return winningService.coupon(string);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>>>>>>>服务异常");
+            log.error(e.getMessage(),e);
+            return Result.getError();
         }
     }
 }
