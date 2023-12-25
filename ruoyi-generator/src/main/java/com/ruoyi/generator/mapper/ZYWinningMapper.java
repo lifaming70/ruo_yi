@@ -1,6 +1,9 @@
 package com.ruoyi.generator.mapper;
 
 import com.ruoyi.generator.domain.ZyWinning;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -11,4 +14,6 @@ import com.ruoyi.generator.domain.ZyWinning;
 public interface ZYWinningMapper {
 
     void add(ZyWinning zyWinning);
+
+    List<String> getLotteryList(@Param("userId") String userId);
 }

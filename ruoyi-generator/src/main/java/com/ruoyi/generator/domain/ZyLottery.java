@@ -66,6 +66,9 @@ private static final long serialVersionUID=1L;
     /** 条数 */
             @Excel(name = "条数")
     private String pageSize;
+    /** 奖券数量 */
+            @Excel(name = "奖券数量")
+    private int number;
 
 @Override
 public String toString(){

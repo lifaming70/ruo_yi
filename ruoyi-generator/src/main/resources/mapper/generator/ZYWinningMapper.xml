@@ -55,4 +55,8 @@
         insert into zy_winning (user_id,lottery_id,create_time)
         values (#{userId,jdbcType=VARCHAR},#{lotteryId,jdbcType=VARCHAR},sysdate())
     </insert>
+
+    <select id="getLotteryList" resultType="java.lang.String">
+        select lottery_id from zy_winning where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
 </mapper>
