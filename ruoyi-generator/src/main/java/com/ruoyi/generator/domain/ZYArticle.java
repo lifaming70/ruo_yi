@@ -18,10 +18,6 @@ public class ZYArticle {
      */
     private String articleId;
     /**
-     * 文章分类
-     */
-    private String articleType;
-    /**
      * 0:不显示，1:显示
      */
     private String articleState;

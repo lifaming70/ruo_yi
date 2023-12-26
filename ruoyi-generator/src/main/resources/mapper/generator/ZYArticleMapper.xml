@@ -5,8 +5,7 @@
 <mapper namespace="com.ruoyi.generator.mapper.ZYArticleMapper">
 
 <insert id="insertArticle">
-    insert into zy_article (article_type,article_state,article_keyword,article_title,article_details,create_time) values
-        (#{articleType,jdbcType=VARCHAR},
+    insert into zy_article (article_state,article_keyword,article_title,article_details,create_time) values
         '1',
         #{articleKeyword,jdbcType=VARCHAR},
         #{articleTitle,jdbcType=VARCHAR},
@@ -23,9 +22,6 @@
 
 <update id="updateArticle">
     update zy_article set
-        <if test="articleType != null">
-            article_type = #{articleType,jdbcType=VARCHAR},
-        </if>
         <if test="articleKeyword != null">
             article_keyword = #{articleKeyword,jdbcType=VARCHAR},
         </if>
@@ -40,16 +36,12 @@
 
 <select id="getArticleList" resultType="com.ruoyi.generator.domain.ZYArticle">
     select article_id as articleId,
-           article_type as articleType,
            article_state as articleState,
            article_keyword as articleKeyword,
            article_title as articleTitle,
            article_details as articleDetails,
            create_time as createTime
     from zy_article where article_state = '1'
-    <if test="articleType != null and articleType != ''">
-        and article_type = #{articleType,jdbcType=VARCHAR}
-    </if>
     <if test="articleTitle != null and articleTitle != ''">
         and article_title like concat('%', #{articleTitle,jdbcType=VARCHAR}, '%')
     </if>
@@ -65,7 +57,6 @@
 
 <select id="getArticle" resultType="com.ruoyi.generator.domain.ZYArticle">
     select article_id as articleId,
-           article_type as articleType,
            article_state as articleState,
            article_keyword as articleKeyword,
            article_title as articleTitle,
