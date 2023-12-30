@@ -5,7 +5,6 @@ import com.ruoyi.generator.mapper.ZYTeamMapper;
 import com.ruoyi.system.mapper.SysUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -27,7 +26,7 @@ public class IncentiveTask {
     @Resource
     StringRedisTemplate stringRedisTemplate;
 
-    @Scheduled(cron ="0 0/1 * * * ?")
+
     public void Incentive() {
 
         log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<推广激励定时任务开始执行");
