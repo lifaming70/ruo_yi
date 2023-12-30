@@ -145,7 +145,7 @@ public class SysUser extends BaseEntity {
     private Long roleId;
 
     /**
-     * 角色ID
+     * 抽奖次数
      */
     private Integer number;
 

@@ -136,6 +136,13 @@ public class Result<T> implements Serializable {
     /**
      * 返回成功消息
      */
+    public static AjaxResult success(String message,Object data) {
+        return AjaxResult.success(message,data);
+    }
+
+    /**
+     * 返回成功消息
+     */
     public static AjaxResult success(Object data) {
         return AjaxResult.success(data);
     }

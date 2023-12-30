@@ -7,7 +7,9 @@ public interface PromotionService {
 
     AjaxResult promotion(String userId, String phone);
 
-    AjaxResult offline(String phone);
+    /*AjaxResult offline(String phone);*/
 
     TableDataInfo team(String userId);
+
+    AjaxResult superior(String userId);
 }

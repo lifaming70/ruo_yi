@@ -1,7 +1,6 @@
 package com.ruoyi.generator.domain;
 
 import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZyTicket extends BaseEntity
+public class ZyTicket
         {
 private static final long serialVersionUID=1L;
 
@@ -54,6 +53,10 @@ private static final long serialVersionUID=1L;
     /** 折扣卷 */
             @Excel(name = "折扣卷")
     private String discount;
+
+    /** 创建时间 */
+            @Excel(name = "创建时间")
+    private String createTime;
 
     /** 产品名称 */
             @Excel(name = "产品名称")

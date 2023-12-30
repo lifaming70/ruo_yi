@@ -34,7 +34,7 @@ public class PromotionWeb {
         }
     }
 
-    @PostMapping("/offline")
+    /*@PostMapping("/offline")
     public AjaxResult offline(@RequestBody String phone) {
         try {
             return promotionService.offline(phone);
@@ -43,16 +43,29 @@ public class PromotionWeb {
             log.error(e.getMessage(),e);
             return Result.error();
         }
-    }
+    }*/
 
     @PostMapping("/team")
     public TableDataInfo team(@RequestBody String userId) {
         try {
-            return promotionService.team(userId);
+            String string = JSONObject.parseObject(userId).get("userId").toString();
+            return promotionService.team(string);
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);
             return Result.getError();
+        }
+    }
+
+    @PostMapping("/superior")
+    public AjaxResult superior(@RequestBody String userId) {
+        try {
+            String string = JSONObject.parseObject(userId).get("userId").toString();
+            return promotionService.superior(string);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>>>>>>>服务异常");
+            log.error(e.getMessage(),e);
+            return Result.error();
         }
     }
 

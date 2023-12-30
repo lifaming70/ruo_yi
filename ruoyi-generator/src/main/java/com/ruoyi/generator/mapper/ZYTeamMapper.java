@@ -11,4 +11,6 @@ public interface ZYTeamMapper {
 
     List<SysUser> listUser(@Param("userId") String userId);
 
+    SysUser getSuperior(@Param("userId") String userId);
+
 }

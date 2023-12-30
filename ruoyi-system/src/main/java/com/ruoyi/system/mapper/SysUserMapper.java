@@ -89,15 +89,15 @@ public interface SysUserMapper
     /**
      * 查询抽奖次数
      *
-     * @param userId 用户id
+     * @param minute 新增时间
      * @return 结果
      */
-    public int selectNumber(@Param("userId") String userId);
+    public List<String> selectTime(@Param("minute") String minute);
 
     /**
      * 修改抽奖次数
      *
-     * @param userId 用户id
+     * @param sysUser 用户id
      * @return 结果
      */
     public int updateNumber(SysUser sysUser);

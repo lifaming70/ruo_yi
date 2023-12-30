@@ -228,5 +228,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			#{userId}
         </foreach> 
  	</delete>
-	
-</mapper> 
+
+    <select id="selectTime" resultType="java.lang.String">
+		select phonenumber from sys_user where create_time > #{minute,jdbcType=VARCHAR}
+	</select>
+</mapper>

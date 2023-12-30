@@ -2,7 +2,6 @@ package com.ruoyi.generator.service.impl;
 
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
-import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class PromotionServiceImpl implements PromotionService {
@@ -42,14 +40,17 @@ public class PromotionServiceImpl implements PromotionService {
             String url = stringRedisTemplate.opsForValue().get("promotionURL");
             String base64 = QrCodeUtil.generateAsBase64(url, qrConfig, "PNG");
             String s = stringRedisTemplate.opsForValue().get(phone);
-            if (null == s) stringRedisTemplate.opsForValue().set(phone,userId,1, TimeUnit.DAYS);
-            return Result.success(base64);
+            if (null == s){
+                stringRedisTemplate.opsForValue().set(phone,userId);
+                return Result.success("分享成功，激励将在下线注册后20分钟内到账",base64);
+            }
+            return Result.success("分享成功，该用户已是其他用户下线",base64);
         }else {
             return Result.error("该用户已被邀请，勿重复分享");
         }
     }
 
-    @Override
+    /*@Override
     public AjaxResult offline(String phone) {
         String string = JSONObject.parseObject(phone).get("phone").toString();
         String userId = stringRedisTemplate.opsForValue().get(string);
@@ -64,13 +65,24 @@ public class PromotionServiceImpl implements PromotionService {
         SysUser user = sysUserMapper.checkPhoneUnique(phone);
         zyTeamMapper.insertTeam(userId,user.getUserId().toString());
         return Result.success("上线抽奖次数已成功增加");
-    }
+    }*/
 
     @Override
     public TableDataInfo team(String userId) {
-        String string = JSONObject.parseObject(userId).get("userId").toString();
-        List<SysUser> strings = zyTeamMapper.listUser(string);
+
+        List<SysUser> strings = zyTeamMapper.listUser(userId);
 
         return Result.getDataTable(strings);
+    }
+
+    @Override
+    public AjaxResult superior(String userId) {
+
+        try {
+            SysUser sysUser = zyTeamMapper.getSuperior(userId);
+            return Result.success(sysUser);
+        }catch (Exception e){
+            return Result.error();
+        }
     }
 }

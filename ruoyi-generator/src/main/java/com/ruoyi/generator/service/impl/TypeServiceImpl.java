@@ -37,12 +37,6 @@ public class TypeServiceImpl implements TypeService {
                 PageHelper.startPage(zyTypeConfig.getPageNumber(),zyTypeConfig.getPageSize());
                 List<ZYTypeConfig> list = zyTypeConfigMapper.getTypeList(zyTypeConfig);
 
-                for (ZYTypeConfig zy : list) {
-                    if ("article".equals(zy.getTypeLabel())){
-                        zy.setTypeLabel("文章类型");
-                    }
-                }
-
                 return Result.getDataTable(list);
             case "5":
                 List<ZYTypeConfig> configList= zyTypeConfigMapper.getType(zyTypeConfig.getTypeId());

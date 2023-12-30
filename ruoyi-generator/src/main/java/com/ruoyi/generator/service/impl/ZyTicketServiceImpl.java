@@ -1,14 +1,15 @@
 package com.ruoyi.generator.service.impl;
 
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.generator.mapper.ZyLotteryMapper;
-import com.ruoyi.generator.mapper.ZyTicketMapper;
 import com.ruoyi.generator.domain.ZyLottery;
 import com.ruoyi.generator.domain.ZyTicket;
+import com.ruoyi.generator.mapper.ZyLotteryMapper;
+import com.ruoyi.generator.mapper.ZyTicketMapper;
 import com.ruoyi.generator.service.IZyTicketService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class ZyTicketServiceImpl implements IZyTicketService {
             ticket.setDiscount(zy.getDiscount());
             ticket.setSkuId(zy.getSkuId());
             ticket.setNotes(zy.getNotes());
-            ticket.setCreateTime(DateUtils.getNowDate());
+            ticket.setCreateTime(new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(DateUtils.getNowDate()));
             list.add(ticket);
         }
 
