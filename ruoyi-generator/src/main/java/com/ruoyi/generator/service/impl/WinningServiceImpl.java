@@ -42,14 +42,9 @@ public class WinningServiceImpl implements WinningService {
 
         ZyTicket zyTicket = null;
 
-        int i = 0;
-
         do {
             zyTicket = winningTheLottery(zyTickets,choose);
-            if (null != zyTicket){
-                i = 1;
-            }
-        }while (i == 0);
+        }while (null == zyTicket);
 
         ZyWinning zyWinning = new ZyWinning();
         zyWinning.setUserId(Integer.parseInt(s));
