@@ -102,8 +102,8 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public TableDataInfo skuDelete(ZySku zySku) {
+    public AjaxResult skuDelete(ZySku zySku) {
         zySkuMapper.deleteSkus(zySku.getSkuIds());
-        return Result.getDataTable();
+        return Result.success();
     }
 }

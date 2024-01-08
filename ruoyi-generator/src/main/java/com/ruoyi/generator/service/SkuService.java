@@ -12,5 +12,5 @@ public interface SkuService {
 
     AjaxResult skuUpdate(ZySku zySku);
 
-    TableDataInfo skuDelete(ZySku zySku);
+    AjaxResult skuDelete(ZySku zySku);
 }
