@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ZYTextMapper">
+
+<insert id="insertLayoutTextList">
+    insert into zy_text (text,text_word,colour,layout_id) values
+    <foreach collection="list" index="index" item="item" separator=",">
+        (#{item.text,jdbcType=VARCHAR},
+         #{item.textWord,jdbcType=VARCHAR},
+         #{item.colour,jdbcType=VARCHAR},
+         #{item.layoutId,jdbcType=VARCHAR})
+    </foreach>
+    </insert>
+
+<select id="getText" resultType="com.ruoyi.generator.domain.ZYText">
+    select text_id as textId,
+           text,text_word as textWord,
+           colour,
+           layout_id as layoutId
+    from zy_text where layout_id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item.layoutId,jdbcType=VARCHAR}
+    </foreach>
+    </select>
+
+<update id="updateZyText">
+    update zy_text
+    <trim prefix="set" suffixOverrides=",">
+        <trim prefix="text = case" suffix="end,">
+            <foreach collection="list" item="item" index="index">
+                <if test="item.text != null and item.text != ''">
+                    when text_id = #{item.textId,jdbcType=VARCHAR} then #{item.text,jdbcType=VARCHAR}
+                </if>
+            </foreach>
+        </trim>
+
+        <trim prefix="text_word = case" suffix="end,">
+            <foreach collection="list" item="item" index="index">
+                <if test="item.textWord != null and item.textWord != ''">
+                    when text_id = #{item.textId,jdbcType=VARCHAR} then #{item.textWord,jdbcType=VARCHAR}
+                </if>
+            </foreach>
+        </trim>
+
+        <trim prefix="colour =case" suffix="end,">
+            <foreach collection="list" item="item" index="index">
+                <if test="item.colour != null and item.colour != ''">
+                    when text_id = #{item.textId,jdbcType=VARCHAR} then #{item.colour,jdbcType=VARCHAR}
+                </if>
+            </foreach>
+        </trim>
+
+    </trim>
+    where text_id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item.textId,jdbcType=VARCHAR}
+    </foreach>
+    </update>
+
+<delete id="deleteZyText">
+    delete from zy_text where layout_id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item.layoutId,jdbcType=VARCHAR}
+    </foreach>
+    </delete>
+</mapper>

@@ -69,11 +69,11 @@ private static final long serialVersionUID=1L;
 
     /** 页数 */
             @Excel(name = "页数")
-    private String pageNum;
+    private int pageNum;
 
     /** 条数 */
             @Excel(name = "条数")
-    private String pageSize;
+    private int pageSize;
 
     /** 奖券数量 */
             @Excel(name = "奖券数量")

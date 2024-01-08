@@ -32,8 +32,8 @@ public class ZyTicketController extends BaseController {
  */
 @PreAuthorize("@ss.hasPermi('system:ticket:list')")
 @GetMapping("/list")
-    public TableDataInfo list(@RequestParam String pageNum,
-                              @RequestParam String pageSize,
+    public TableDataInfo list(@RequestParam int pageNum,
+                              @RequestParam int pageSize,
                               @RequestParam(required = false) String lotteryName,
                               @RequestParam(required = false) String lotteryType) {
         startPage();

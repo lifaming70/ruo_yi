@@ -1,5 +1,6 @@
 package com.ruoyi.generator.mapper;
 
+import com.ruoyi.generator.domain.ZYLayout;
 import com.ruoyi.generator.domain.ZySku;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface ZYSkuMapper {
     void updateSku(ZySku zySku);
 
     void deleteSkus(List<String> list);
+
+    List<ZySku> getLayoutSku(List<ZYLayout> list);
 }

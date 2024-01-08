@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ZYLayoutMapper">
+
+    <insert id="insertLayoutList" parameterType="com.ruoyi.generator.domain.ZYLayout" useGeneratedKeys="true" keyProperty="layoutId">
+    insert into zy_layout  (mark,parent_id,article_id,sku_id,soft) values
+    <foreach collection="list" index="index" item="item" separator=",">
+        (#{item.mark,jdbcType=VARCHAR},
+        <choose>
+            <when test="item.parentId != null and item.parentId !=''">
+                #{item.parentId,jdbcType=VARCHAR},
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="item.articleId != null and item.articleId !=''">
+                #{item.articleId,jdbcType=VARCHAR},
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="item.skuId != null and item.skuId !=''">
+                #{item.skuId,jdbcType=VARCHAR},
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+        #{item.soft})
+    </foreach>
+    </insert>
+
+<select id="getLayoutList" resultType="com.ruoyi.generator.domain.ZYLayout">
+    WITH RECURSIVE tree AS (
+
+        select zt.layout_id,0 as level from zy_layout zt where article_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item.articleId,jdbcType=VARCHAR} -- 设置根节点ID
+        </foreach>
+
+        UNION ALL
+
+        select zy.layout_id,t.level + 1 from zy_layout zy,tree t where zy.parent_id = t.layout_id
+    )
+    SELECT za.layout_id as layoutId,
+           za.mark,
+           za.parent_id as parentId,
+           za.soft,
+           za.article_id as articleId,
+           za.sku_id as skuId,
+           t.level
+    FROM tree t,zy_layout za where t.layout_id = za.layout_id order by level
+
+    </select>
+
+    <select id="getLayoutListString" resultType="com.ruoyi.generator.domain.ZYLayout">
+        WITH RECURSIVE tree AS (
+
+        select zt.layout_id,0 as level from zy_layout zt where article_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR} -- 设置根节点ID
+        </foreach>
+
+        UNION ALL
+
+        select zy.layout_id,t.level + 1 from zy_layout zy,tree t where zy.parent_id = t.layout_id
+        )
+        SELECT za.layout_id as layoutId,
+        za.mark,
+        za.parent_id as parentId,
+        za.soft,
+        za.article_id as articleId,
+        za.sku_id as skuId,
+        t.level
+        FROM tree t,zy_layout za where t.layout_id = za.layout_id order by level
+
+    </select>
+
+<update id="updateZyLayout" parameterType="list">
+    update zy_layout
+    <trim prefix="set" suffixOverrides=",">
+        <trim prefix="sku_id = case" suffix="end,">
+            <foreach collection="list" item="item" index="index">
+                <if test="item.skuId != null and item.skuId != ''">
+                    when layout_id = #{item.layoutId,jdbcType=VARCHAR} then #{item.skuId,jdbcType=VARCHAR}
+                </if>
+            </foreach>
+        </trim>
+    </trim>
+    where layout_id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item.layoutId,jdbcType=VARCHAR}
+    </foreach>
+    </update>
+
+<delete id="deleteZyLayout">
+    delete from zy_layout where layout_id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item.layoutId,jdbcType=VARCHAR}
+    </foreach>
+    </delete>
+</mapper>

@@ -67,10 +67,10 @@ private static final long serialVersionUID=1L;
     private String notes;
     /** 页数 */
             @Excel(name = "页数")
-    private String pageNum;
+    private int pageNum;
     /** 条数 */
             @Excel(name = "条数")
-    private String pageSize;
+    private int pageSize;
     /** 奖券id集合 */
             @Excel(name = "奖券id集合")
     private List<String> lotteryIds;

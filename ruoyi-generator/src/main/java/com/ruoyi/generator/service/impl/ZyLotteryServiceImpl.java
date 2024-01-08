@@ -1,5 +1,6 @@
 package com.ruoyi.generator.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.ruoyi.generator.domain.ZyLottery;
 import com.ruoyi.generator.domain.ZyTicket;
 import com.ruoyi.generator.mapper.ZyLotteryMapper;
@@ -43,10 +44,12 @@ public class ZyLotteryServiceImpl implements IZyLotteryService {
      */
     @Override
     public List<ZyLottery> selectZyLotteryList(ZyLottery zyLottery,String mark) {
+        PageHelper.startPage(zyLottery.getPageNum(),zyLottery.getPageSize());
         List<ZyLottery> zyLotteries = zyLotteryMapper.selectZyLotteryList(zyLottery);
 
 
         if (mark != null && mark.equals("1")){
+            PageHelper.startPage(zyLottery.getPageNum(),zyLottery.getPageSize());
             List<ZyTicket> list = zyTicketMapper.selectAll();
 
             for (ZyTicket zy : list) {

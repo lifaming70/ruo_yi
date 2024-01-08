@@ -1,5 +1,6 @@
 package com.ruoyi.generator.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.generator.domain.ZyLottery;
 import com.ruoyi.generator.domain.ZyTicket;
@@ -46,6 +47,7 @@ public class ZyTicketServiceImpl implements IZyTicketService {
      */
     @Override
     public List<ZyTicket> selectZyTicketList(ZyTicket zyTicket) {
+        PageHelper.startPage(zyTicket.getPageNum(),zyTicket.getPageSize());
         return zyTicketMapper.selectZyTicketList(zyTicket);
     }
 

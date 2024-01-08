@@ -19,7 +19,9 @@ public class ZySku {
      * 商品名称
      */
     private String skuName;
-
+    /**
+     * 商品主图
+     */
     private String image;
     /**
      * 商品类型

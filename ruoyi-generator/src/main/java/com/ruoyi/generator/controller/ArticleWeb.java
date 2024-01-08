@@ -1,6 +1,7 @@
 package com.ruoyi.generator.controller;
 
 import com.ruoyi.common.annotation.Anonymous;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.generator.domain.ZYArticle;
 import com.ruoyi.generator.service.ArticleService;
@@ -22,15 +23,66 @@ public class ArticleWeb {
     ArticleService articleService;
 
     /**
-     * 文章增删改查
+     * 页面新增
      * @param zyArticle
      * @return
      */
     @Anonymous
-    @PostMapping("/articleCrud")
-    public TableDataInfo articleCrud(@RequestBody ZYArticle zyArticle, @RequestBody String type) {
+    @PostMapping("/articleAdd")
+    public AjaxResult articleAdd(@RequestBody ZYArticle zyArticle) {
         try {
-            return articleService.articleCrud(zyArticle,type);
+            return articleService.articleAdd(zyArticle);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>>>>>>>服务异常");
+            log.error(e.getMessage(),e);
+            return Result.error();
+        }
+    }
+
+    /**
+     * 页面修改
+     * @param zyArticle
+     * @return
+     */
+    @Anonymous
+    @PostMapping("/articleUpdate")
+    public AjaxResult articleUpdate(@RequestBody ZYArticle zyArticle) {
+        try {
+            return articleService.articleUpdate(zyArticle);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>>>>>>>服务异常");
+            log.error(e.getMessage(),e);
+            return Result.error();
+        }
+    }
+
+    /**
+     * 页面删除
+     * @param zyArticle
+     * @return
+     */
+    @Anonymous
+    @PostMapping("/delete")
+    public AjaxResult delete(@RequestBody ZYArticle zyArticle) {
+        try {
+            return articleService.delete(zyArticle);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>>>>>>>服务异常");
+            log.error(e.getMessage(),e);
+            return Result.error();
+        }
+    }
+
+    /**
+     * 页面查询
+     * @param zyArticle
+     * @return
+     */
+    @Anonymous
+    @PostMapping("/getList")
+    public TableDataInfo getList(@RequestBody ZYArticle zyArticle) {
+        try {
+            return articleService.getList(zyArticle);
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);

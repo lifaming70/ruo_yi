@@ -232,4 +232,13 @@
             #{item,jdbcType=VARCHAR}
         </foreach>
     </update>
+
+    <select id="getLayoutSku" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from zy_sku where state in ('2','3') and sku_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item.skuId,jdbcType=VARCHAR}
+        </foreach>
+    </select>
 </mapper>

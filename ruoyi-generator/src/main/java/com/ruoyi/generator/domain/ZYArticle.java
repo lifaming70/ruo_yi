@@ -14,33 +14,33 @@ import java.util.List;
 public class ZYArticle {
 
     /**
-     * 文章id
+     * 页面id
      */
     private String articleId;
     /**
+     * 页面名称
+     */
+    private String articleName;
+    /**
+     * 创建人
+     */
+    private String createName;
+    /**
      * 0:不显示，1:显示
      */
-    private String articleState;
+    private String state;
     /**
-     * 文章关键词
+     * 备注
      */
-    private String articleKeyword;
-    /**
-     * 文章标题
-     */
-    private String articleTitle;
-    /**
-     * 文章详情
-     */
-    private String articleDetails;
+    private String notes;
     /**
      * 创建时间
      */
     private String createTime;
     /**
-     * 结束时间
+     * 布局对象
      */
-    private String endTime;
+    private List<ZYLayout> goZyLayout;
     /**
      * 条数
      */
@@ -48,7 +48,7 @@ public class ZYArticle {
     /**
      * 页数
      */
-    private Integer pageNumber;
+    private Integer pageNum;
     /**
      * 批量删除
      */

@@ -30,16 +30,16 @@ public class IncentiveTask {
     public void Incentive() {
 
         log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<推广激励定时任务开始执行");
-
+        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+        calendar.setTime(date);
         calendar.add(Calendar.MINUTE, -20);// 20分钟前
 
         String  minute =  new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
 
         List<String> strings = sysUserMapper.selectTime(minute);
 
-        log.info("<<<<<<<<<<<<<<激励定时任务扫描到20分钟前的新增用户为：" + strings.size());
+        log.info("<<<<<<<<<<<<<<激励定时任务扫描的开始时间为：" + minute  +"扫描到的新增用户为：" + strings.size());
 
         int sum = 0;
 
