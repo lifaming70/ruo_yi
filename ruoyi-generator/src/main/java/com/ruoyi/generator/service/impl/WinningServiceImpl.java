@@ -71,6 +71,8 @@ public class WinningServiceImpl implements WinningService {
     public TableDataInfo coupon(String userId) {
         List<String> stringList = zyWinningMapper.getLotteryList(userId);
 
+        if (stringList.isEmpty()) return Result.getDataTable();
+
         List<ZyLottery> lotteryList = zyLotteryMapper.selectList(stringList);
 
         int sum = 0;
