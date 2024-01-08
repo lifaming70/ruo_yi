@@ -42,6 +42,28 @@ public class WinningServiceImpl implements WinningService {
 
         ZyTicket zyTicket = null;
 
+        int i = 0;
+
+        do {
+            zyTicket = winningTheLottery(zyTickets,choose);
+            if (null != zyTicket){
+                i = 1;
+            }
+        }while (i == 0);
+
+        ZyWinning zyWinning = new ZyWinning();
+        zyWinning.setUserId(Integer.parseInt(s));
+        assert false;
+        zyWinning.setLotteryId(zyTicket.getLotteryId());
+        zyWinningMapper.add(zyWinning);
+
+        return Result.success(zyTicket);
+    }
+
+    public ZyTicket winningTheLottery(List<ZyTicket> zyTickets,int choose) {
+
+        ZyTicket zyTicket = null;
+
         for (ZyTicket zt : zyTickets) {
             int parseInt = Integer.parseInt(zt.getProbability());
 
@@ -54,17 +76,10 @@ public class WinningServiceImpl implements WinningService {
 
             if (pool.contains(choose)){
                 zyTicket = zt;
-                break;
+                return zyTicket;
             }
         }
-
-        ZyWinning zyWinning = new ZyWinning();
-        zyWinning.setUserId(Integer.parseInt(s));
-        assert zyTicket != null;
-        zyWinning.setLotteryId(zyTicket.getLotteryId());
-        zyWinningMapper.add(zyWinning);
-
-        return Result.success(zyTicket);
+        return null;
     }
 
     @Override
