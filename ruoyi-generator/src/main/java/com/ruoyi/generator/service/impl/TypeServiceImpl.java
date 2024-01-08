@@ -34,7 +34,7 @@ public class TypeServiceImpl implements TypeService {
                 zyTypeConfigMapper.updateType(zyTypeConfig);
                 break;
             case "4":
-                PageHelper.startPage(zyTypeConfig.getPageNumber(),zyTypeConfig.getPageSize());
+                PageHelper.startPage(zyTypeConfig.getPageNum(),zyTypeConfig.getPageSize());
                 List<ZYTypeConfig> list = zyTypeConfigMapper.getTypeList(zyTypeConfig);
 
                 return Result.getDataTable(list);

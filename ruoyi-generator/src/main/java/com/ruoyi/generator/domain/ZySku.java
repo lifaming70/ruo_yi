@@ -122,7 +122,7 @@ public class ZySku {
     /**
      * 商品图片信息
      */
-    private List<String> images;
+    private List<ZyImage> images;
 
     private List<String> skuIds;
     /**
@@ -132,5 +132,5 @@ public class ZySku {
     /**
      * 页数
      */
-    private Integer pageNumber;
+    private Integer pageNum;
 }

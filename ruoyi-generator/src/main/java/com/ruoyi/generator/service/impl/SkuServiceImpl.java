@@ -1,6 +1,7 @@
 package com.ruoyi.generator.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.generator.mapper.ZYImageMapper;
@@ -28,7 +29,7 @@ public class SkuServiceImpl implements SkuService {
     ZYImageMapper zyImageMapper;
 
     @Override
-    public TableDataInfo skuAdd(ZySku zySku) {
+    public AjaxResult skuAdd(ZySku zySku) {
 
         String uuid = UUID.fastUUID().toString();
         String[] split = uuid.split("-");
@@ -43,24 +44,26 @@ public class SkuServiceImpl implements SkuService {
         zySkuMapper.skuAdd(zySku);
 
         List<ZyImage> list = new ArrayList<>();
-        List<String> String = zySku.getImages();
+        List<ZyImage> images = zySku.getImages();
 
-        for (String str : String) {
+        for (ZyImage ze : images) {
             ZyImage zyImage = new ZyImage();
             zyImage.setSkuId(skuId);
-            zyImage.setImage(str);
+            zyImage.setImage(ze.getImage());
+            zyImage.setImage(ze.getImage());
+            zyImage.setSoft(ze.getSoft());
             list.add(zyImage);
         }
         
         zyImageMapper.imageAdd(list);
 
-        return Result.getDataTable();
+        return Result.success();
     }
 
     @Override
     public TableDataInfo getSku(ZySku zySku) {
 
-        PageHelper.startPage(zySku.getPageNumber(),zySku.getPageSize());
+        PageHelper.startPage(zySku.getPageNum(),zySku.getPageSize());
         List<ZySku> sku = zySkuMapper.getSku(zySku);
 
         if (sku.isEmpty()){
@@ -77,12 +80,11 @@ public class SkuServiceImpl implements SkuService {
 
         for (ZySku zy : sku) {
             String skuId = zy.getSkuId();
-            List<String> stringList = new ArrayList<>();
+            List<ZyImage> stringList = new ArrayList<>();
             for (int i = 0; i < image.size(); i++) {
                 ZyImage zyImage = image.get(i);
                 if (skuId.equals(zyImage.getSkuId())){
-                    String string = zyImage.getImage();
-                    stringList.add(string);
+                    stringList.add(zyImage);
                     image.remove(i);
                     i--;
                 }
@@ -93,9 +95,10 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public TableDataInfo  skuUpdate(ZySku zySku) {
+    public AjaxResult  skuUpdate(ZySku zySku) {
         zySkuMapper.updateSku(zySku);
-        return Result.getDataTable();
+        zyImageMapper.update(zySku.getImages());
+        return Result.success();
     }
 
     @Override

@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 public class ZyImage {
 
     /**
+     * 图片id
+     */
+    private String imageId;
+    /**
      * 商品ID
      */
     private String skuId;
@@ -17,4 +21,8 @@ public class ZyImage {
      * 图片base64信息
      */
     private String image;
+    /**
+     * 排序
+     */
+    private int soft;
 }

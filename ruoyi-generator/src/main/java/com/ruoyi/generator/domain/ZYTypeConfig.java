@@ -40,7 +40,7 @@ public class ZYTypeConfig {
     /**
      * 页数
      */
-    private Integer pageNumber;
+    private Integer pageNum;
     /**
      * 批量删除
      */

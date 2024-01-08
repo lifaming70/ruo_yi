@@ -5,17 +5,40 @@
 <mapper namespace="com.ruoyi.generator.mapper.ZYImageMapper">
 
     <select id="imageAdd">
-        insert into zy_image (sku_id,image) values
+        insert into zy_image (sku_id,image,soft) values
         <foreach collection="list" index="index" item="item" separator=",">
             (#{item.skuId,jdbcType=VARCHAR},
-            #{item.image,jdbcType=VARCHAR})
+            #{item.image,jdbcType=VARCHAR},
+            #{item.soft})
         </foreach>
     </select>
 
     <select id="getImage" resultType="com.ruoyi.generator.domain.ZyImage">
-        select sku_id as skuId, image from zy_image where sku_id in
+        select image_id as imageId, sku_id as skuId, image,soft from zy_image where sku_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item,jdbcType=VARCHAR}
         </foreach>
     </select>
+
+    <select id="getImages" resultType="com.ruoyi.generator.domain.ZyImage">
+        select image_id as imageId, sku_id as skuId, image,soft from zy_image where sku_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item.skuId,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <update id="update">
+        update zy_image
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="image = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when image_id = #{item.imageId,jdbcType=VARCHAR} then #{item.image,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+        </trim>
+        where image_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item.imageId}
+        </foreach>
+    </update>
 </mapper>

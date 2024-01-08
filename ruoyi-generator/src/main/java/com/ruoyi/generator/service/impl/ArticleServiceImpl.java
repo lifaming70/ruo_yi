@@ -39,6 +39,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     ZYTextMapper zyTextMapper;
 
+    @Resource
+    ZYImageMapper zyImageMapper;
+
     @Override
     public AjaxResult articleAdd(ZYArticle zyArticle) {
 
@@ -156,6 +159,8 @@ public class ArticleServiceImpl implements ArticleService {
         PageHelper.startPage(zyArticle.getPageNum(),zyArticle.getPageSize());
         List<ZYArticle> articleList = zyArticleMapper.getArticleList(zyArticle);
 
+        if (articleList.isEmpty()) return Result.getDataTable(articleList);
+
         List<ZYLayout> layoutList = zyLayoutMapper.getLayoutList(articleList);
 
         List<ZYLayout> goLayoutList = new ArrayList<>();
@@ -189,18 +194,38 @@ public class ArticleServiceImpl implements ArticleService {
         List<ZYLayoutImage> layoutImage = zyLayoutImageMapper.getLayoutImage(arrangeZyLayout);
         List<ZySku> layoutSku = zySkuMapper.getLayoutSku(skuZyLayout);
 
-        for (ZYLayout zt : skuZyLayout) {
-            String skuId = zt.getSkuId();
-            for (int i = 0; i < layoutSku.size(); i++) {
-                ZySku zySku = layoutSku.get(i);
-                if (zySku.getSkuId().equals(skuId)){
-                    zt.setZySku(zySku);
-                    layoutSku.remove(i);
-                    i--;
+        if (!layoutSku.isEmpty()){
+            List<ZyImage> image = zyImageMapper.getImages(layoutSku);
+
+            for (ZySku zs : layoutSku) {
+                String skuId = zs.getSkuId();
+                List<ZyImage> list = new ArrayList<>();
+                for (int i = 0; i < image.size(); i++) {
+                    ZyImage zyImage = image.get(i);
+                    String id = zyImage.getSkuId();
+                    if (id.equals(skuId)){
+                        list.add(zyImage);
+                        image.remove(i);
+                        i--;
+                    }
                 }
+                zs.setImages(list);
             }
-            if (layoutData.size() == 0) break;
+
+            for (ZYLayout zt : skuZyLayout) {
+                String skuId = zt.getSkuId();
+                for (int i = 0; i < layoutSku.size(); i++) {
+                    ZySku zySku = layoutSku.get(i);
+                    if (zySku.getSkuId().equals(skuId)){
+                        zt.setZySku(zySku);
+                        layoutSku.remove(i);
+                        i--;
+                    }
+                }
+                if (layoutData.size() == 0) break;
+            }
         }
+
 
         for (ZYLayout zt : arrangeZyLayout) {
             String layoutId = zt.getLayoutId();

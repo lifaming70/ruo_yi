@@ -1,6 +1,7 @@
 package com.ruoyi.generator.controller;
 
 import com.ruoyi.common.annotation.Anonymous;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.generator.domain.ZySku;
 import com.ruoyi.generator.service.SkuService;
@@ -23,13 +24,13 @@ public class SkuWeb {
 
     @Anonymous
     @PostMapping("/skuAdd")
-    public TableDataInfo skuAdd(@RequestBody ZySku zySku) {
+    public AjaxResult skuAdd(@RequestBody ZySku zySku) {
         try {
             return service.skuAdd(zySku);
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);
-            return Result.getError();
+            return Result.error();
         }
     }
 
@@ -47,13 +48,13 @@ public class SkuWeb {
 
     @Anonymous
     @PostMapping("/skuUpdate")
-    public TableDataInfo skuUpdate(@RequestBody ZySku zySku) {
+    public AjaxResult skuUpdate(@RequestBody ZySku zySku) {
         try {
             return service.skuUpdate(zySku);
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);
-            return Result.getError();
+            return Result.error();
         }
     }
 
