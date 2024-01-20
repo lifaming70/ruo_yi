@@ -163,112 +163,114 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<ZYLayout> layoutList = zyLayoutMapper.getLayoutList(articleList);
 
-        List<ZYLayout> goLayoutList = new ArrayList<>();
+        if (!layoutList.isEmpty()) {
 
-        List<ZYLayout> arrangeZyLayout = new ArrayList<>();
+            List<ZYLayout> goLayoutList = new ArrayList<>();
 
-        List<ZYLayout> skuZyLayout = new ArrayList<>();
+            List<ZYLayout> arrangeZyLayout = new ArrayList<>();
 
-        for (ZYLayout zt : layoutList) {
-            if (0 != zt.getLevel() && null == zt.getSkuId()){
-                arrangeZyLayout.add(zt);
-            }else if (0 == zt.getLevel()){
-                goLayoutList.add(zt);
-            }else {
-                skuZyLayout.add(zt);
-            }
-        }
+            List<ZYLayout> skuZyLayout = new ArrayList<>();
 
-        List<ZYLayoutData> layoutData = zyLayoutDataMapper.getLayoutData(goLayoutList);
-
-        for (ZYLayout zt : goLayoutList) {
-            String layoutId = zt.getLayoutId();
-            for (ZYLayoutData zd : layoutData) {
-                if (zd.getLayoutId().equals(layoutId)){
-                    zt.setZyLayoutData(zd);
+            for (ZYLayout zt : layoutList) {
+                if (0 != zt.getLevel() && null == zt.getSkuId()) {
+                    arrangeZyLayout.add(zt);
+                } else if (0 == zt.getLevel()) {
+                    goLayoutList.add(zt);
+                } else {
+                    skuZyLayout.add(zt);
                 }
             }
-        }
 
-        List<ZYText> text = zyTextMapper.getText(arrangeZyLayout);
-        List<ZYLayoutImage> layoutImage = zyLayoutImageMapper.getLayoutImage(arrangeZyLayout);
-        List<ZySku> layoutSku = zySkuMapper.getLayoutSku(skuZyLayout);
+            List<ZYLayoutData> layoutData = zyLayoutDataMapper.getLayoutData(goLayoutList);
 
-        if (!layoutSku.isEmpty()){
-            List<ZyImage> image = zyImageMapper.getImages(layoutSku);
+            for (ZYLayout zt : goLayoutList) {
+                String layoutId = zt.getLayoutId();
+                for (ZYLayoutData zd : layoutData) {
+                    if (zd.getLayoutId().equals(layoutId)) {
+                        zt.setZyLayoutData(zd);
+                    }
+                }
+            }
 
-            for (ZySku zs : layoutSku) {
-                String skuId = zs.getSkuId();
-                List<ZyImage> list = new ArrayList<>();
-                for (int i = 0; i < image.size(); i++) {
-                    ZyImage zyImage = image.get(i);
-                    String id = zyImage.getSkuId();
-                    if (id.equals(skuId)){
-                        list.add(zyImage);
-                        image.remove(i);
+            List<ZYText> text = zyTextMapper.getText(arrangeZyLayout);
+            List<ZYLayoutImage> layoutImage = zyLayoutImageMapper.getLayoutImage(arrangeZyLayout);
+            List<ZySku> layoutSku = zySkuMapper.getLayoutSku(skuZyLayout);
+
+            if (!layoutSku.isEmpty()) {
+                List<ZyImage> image = zyImageMapper.getImages(layoutSku);
+
+                for (ZySku zs : layoutSku) {
+                    String skuId = zs.getSkuId();
+                    List<ZyImage> list = new ArrayList<>();
+                    for (int i = 0; i < image.size(); i++) {
+                        ZyImage zyImage = image.get(i);
+                        String id = zyImage.getSkuId();
+                        if (id.equals(skuId)) {
+                            list.add(zyImage);
+                            image.remove(i);
+                            i--;
+                        }
+                    }
+                    zs.setImages(list);
+                }
+
+                for (ZYLayout zt : skuZyLayout) {
+                    String skuId = zt.getSkuId();
+                    for (int i = 0; i < layoutSku.size(); i++) {
+                        ZySku zySku = layoutSku.get(i);
+                        if (zySku.getSkuId().equals(skuId)) {
+                            zt.setZySku(zySku);
+                            layoutSku.remove(i);
+                            i--;
+                        }
+                    }
+                    if (layoutData.size() == 0) break;
+                }
+            }
+
+
+            for (ZYLayout zt : arrangeZyLayout) {
+                String layoutId = zt.getLayoutId();
+                for (int i = 0; i < layoutImage.size(); i++) {
+                    ZYLayoutImage zyLayoutImage = layoutImage.get(i);
+                    if (zyLayoutImage.getLayoutId().equals(layoutId)) {
+                        zt.setZyLayoutImage(zyLayoutImage);
+                        layoutImage.remove(i);
                         i--;
                     }
                 }
-                zs.setImages(list);
+                if (layoutImage.size() == 0) break;
             }
 
-            for (ZYLayout zt : skuZyLayout) {
-                String skuId = zt.getSkuId();
-                for (int i = 0; i < layoutSku.size(); i++) {
-                    ZySku zySku = layoutSku.get(i);
-                    if (zySku.getSkuId().equals(skuId)){
-                        zt.setZySku(zySku);
-                        layoutSku.remove(i);
+            for (ZYLayout zt : arrangeZyLayout) {
+                String layoutId = zt.getLayoutId();
+                for (int i = 0; i < text.size(); i++) {
+                    ZYText zyText = text.get(i);
+                    if (zyText.getLayoutId().equals(layoutId)) {
+                        zt.setZyText(zyText);
+                        text.remove(i);
                         i--;
                     }
                 }
-                if (layoutData.size() == 0) break;
+                if (text.size() == 0) break;
             }
-        }
 
+            List<ZYLayout> tree = getTree(layoutList);
 
-        for (ZYLayout zt : arrangeZyLayout) {
-            String layoutId = zt.getLayoutId();
-            for (int i = 0; i < layoutImage.size(); i++) {
-                ZYLayoutImage zyLayoutImage = layoutImage.get(i);
-                if (zyLayoutImage.getLayoutId().equals(layoutId)){
-                    zt.setZyLayoutImage(zyLayoutImage);
-                    layoutImage.remove(i);
-                    i--;
+            for (ZYArticle za : articleList) {
+                String articleId = za.getArticleId();
+                List<ZYLayout> list = new ArrayList<>();
+                for (int i = 0; i < tree.size(); i++) {
+                    ZYLayout zyLayout = tree.get(i);
+                    if (zyLayout.getArticleId().equals(articleId)) {
+                        list.add(zyLayout);
+                        tree.remove(i);
+                        i--;
+                    }
                 }
+                za.setGoZyLayout(list);
             }
-            if (layoutImage.size() == 0) break;
         }
-
-        for (ZYLayout zt : arrangeZyLayout) {
-            String layoutId = zt.getLayoutId();
-            for (int i = 0; i < text.size(); i++) {
-                ZYText zyText = text.get(i);
-                if (zyText.getLayoutId().equals(layoutId)){
-                    zt.setZyText(zyText);
-                    text.remove(i);
-                    i--;
-                }
-            }
-            if (text.size() == 0) break;
-        }
-
-        List<ZYLayout> tree = getTree(layoutList);
-
-        for (ZYArticle za : articleList) {
-            String articleId = za.getArticleId();
-            List<ZYLayout> list = new ArrayList<>();
-            for (int i = 0; i < tree.size(); i++) {
-                ZYLayout zyLayout = tree.get(i);
-                if (zyLayout.getArticleId().equals(articleId)){
-                   list.add(zyLayout);
-                    tree.remove(i);
-                    i--;
-               }
-            }
-            za.setGoZyLayout(list);
-        }
-
         return Result.getDataTable(articleList);
     }
 
