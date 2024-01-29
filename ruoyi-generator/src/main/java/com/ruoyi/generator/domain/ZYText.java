@@ -24,7 +24,7 @@ public class ZYText {
     /**
      * 文字颜色
      */
-    private String colour;
+    private String color;
     /**
      * 布局id
      */

@@ -5,11 +5,11 @@
 <mapper namespace="com.ruoyi.generator.mapper.ZYTextMapper">
 
 <insert id="insertLayoutTextList">
-    insert into zy_text (text,text_word,colour,layout_id) values
+    insert into zy_text (text,text_word,color,layout_id) values
     <foreach collection="list" index="index" item="item" separator=",">
         (#{item.text,jdbcType=VARCHAR},
          #{item.textWord,jdbcType=VARCHAR},
-         #{item.colour,jdbcType=VARCHAR},
+         #{item.color,jdbcType=VARCHAR},
          #{item.layoutId,jdbcType=VARCHAR})
     </foreach>
     </insert>
@@ -17,7 +17,7 @@
 <select id="getText" resultType="com.ruoyi.generator.domain.ZYText">
     select text_id as textId,
            text,text_word as textWord,
-           colour,
+           color,
            layout_id as layoutId
     from zy_text where layout_id in
     <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
@@ -44,10 +44,10 @@
             </foreach>
         </trim>
 
-        <trim prefix="colour =case" suffix="end,">
+        <trim prefix="color = case" suffix="end,">
             <foreach collection="list" item="item" index="index">
-                <if test="item.colour != null and item.colour != ''">
-                    when text_id = #{item.textId,jdbcType=VARCHAR} then #{item.colour,jdbcType=VARCHAR}
+                <if test="item.color != null and item.color != ''">
+                    when text_id = #{item.textId,jdbcType=VARCHAR} then #{item.color,jdbcType=VARCHAR}
                 </if>
             </foreach>
         </trim>

@@ -40,7 +40,7 @@ public class ZYArticle {
     /**
      * 布局对象
      */
-    private List<ZYLayout> goZyLayout;
+    private List<ZYLayout> childZyLayout;
     /**
      * 条数
      */

@@ -49,88 +49,67 @@ public class ArticleServiceImpl implements ArticleService {
 
         String articleId = zyArticle.getArticleId();//获取页面id
 
-        List<ZYLayout> goZyLayout = zyArticle.getGoZyLayout();//获取页面行数据
+        List<ZYLayout> goZyLayout = zyArticle.getChildZyLayout();//获取页面行数据
         goZyLayout.forEach(o -> o.setArticleId(articleId));//行数据绑定页面id
 
-        zyLayoutMapper.insertLayoutList(goZyLayout);//行数据入库
-
-        List<ZYLayoutData> zyLayoutDataList = new ArrayList<>();
-
-        //获取行布局参数绑定行布局
-        for (ZYLayout zt : goZyLayout) {
-            ZYLayoutData zyLayoutData = zt.getZyLayoutData();
-            zyLayoutData.setLayoutId(zt.getLayoutId());
-            zyLayoutDataList.add(zyLayoutData);
-
-        }
-
-        zyLayoutDataMapper.insertLayoutDateList(zyLayoutDataList);//行布局参数入库
-
-        List<ZYLayout> arrangeZyLayout = goZyLayout;
         List<ZYText> zyTexts = new ArrayList<>();
         List<ZYLayoutImage> zyLayoutImages = new ArrayList<>();
+        List<ZYLayoutData> zyLayoutDataList = new ArrayList<>();
+
+        boolean mark = false;
 
         //无限循环获取行下的列数据和获取与列绑定的实体数据以及获取列下的列数据
         do {
-            arrangeZyLayout = queryTerr(arrangeZyLayout);
+            if (mark) goZyLayout = queryTerr(goZyLayout);
 
-            if (!arrangeZyLayout.isEmpty()){
-                zyLayoutMapper.insertLayoutList(arrangeZyLayout);
-                List<Object> objects = queryTerrData(arrangeZyLayout);
+            if (!goZyLayout.isEmpty()){
+                zyLayoutMapper.insertLayoutList(goZyLayout);
+                List<Object> objects = queryTerrData(goZyLayout);
 
-                for (Object obj : objects) {
-                    if (obj instanceof ZYText){
-                        zyTexts.add(JSONObject.parseObject(JSONObject.toJSONString(obj),ZYText.class));
-                    }else if (obj instanceof ZYLayoutImage){
-                        zyLayoutImages.add(JSONObject.parseObject(JSONObject.toJSONString(obj),ZYLayoutImage.class));
-                    }
-                }
+                getObj(zyTexts, zyLayoutImages, zyLayoutDataList, objects);
             }
-        } while (arrangeZyLayout.size() > 0);
+            mark = true;
+        } while (goZyLayout.size() > 0);
 
-        zyTextMapper.insertLayoutTextList(zyTexts);
-        zyLayoutImageMapper.insertLayoutImageList(zyLayoutImages);
+        if (!zyLayoutDataList.isEmpty()) zyLayoutDataMapper.insertLayoutDateList(zyLayoutDataList);
+        if (!zyTexts.isEmpty()) zyTextMapper.insertLayoutTextList(zyTexts);
+        if (!zyLayoutImages.isEmpty()) zyLayoutImageMapper.insertLayoutImageList(zyLayoutImages);
 
         return Result.success();
     }
+
+
 
     @Override
     public AjaxResult articleUpdate(ZYArticle zyArticle) {
 
 
-        List<ZYLayout> goZyLayout = zyArticle.getGoZyLayout();
+        List<ZYLayout> goZyLayout = zyArticle.getChildZyLayout();
 
         List<ZYLayoutData> zyLayoutDataList= new ArrayList<>();
-        List<ZYLayout> arrangeZyLayout = goZyLayout;
         List<ZYText> zyTexts = new ArrayList<>();
         List<ZYLayoutImage> zyLayoutImages = new ArrayList<>();
 
-
-        for (ZYLayout zt : goZyLayout) {
-            ZYLayoutData zyLayoutData = zt.getZyLayoutData();
-            zyLayoutDataList.add(zyLayoutData);
-        }
-
-        zyLayoutDataMapper.updateZyLayoutData(zyLayoutDataList);
-
+        boolean mark = false;
         do {
-            arrangeZyLayout = queryArrange(arrangeZyLayout);
-            zyLayoutMapper.updateZyLayout(arrangeZyLayout);
-            List<Object> objects = queryArrangeData(arrangeZyLayout);
+            if (mark) goZyLayout = queryArrange(goZyLayout);
 
-            for (Object obj : objects) {
-                if (obj instanceof ZYText){
-                    zyTexts.add(JSONObject.parseObject(JSONObject.toJSONString(obj),ZYText.class));
-                }else if (obj instanceof ZYLayoutImage){
-                    zyLayoutImages.add(JSONObject.parseObject(JSONObject.toJSONString(obj),ZYLayoutImage.class));
+            for (ZYLayout zt : goZyLayout) {
+                if (null != zt.getSkuId()){
+                    zyLayoutMapper.updateZyLayout(goZyLayout);
                 }
             }
 
-        } while (arrangeZyLayout.size() == 0);
+            List<Object> objects = queryArrangeData(goZyLayout);
+
+            getObj(zyTexts, zyLayoutImages, zyLayoutDataList, objects);
+            mark = true;
+        } while (goZyLayout.size() > 0);
 
         zyTextMapper.updateZyText(zyTexts);
         zyLayoutImageMapper.updateZyLayoutImage(zyLayoutImages);
         zyArticleMapper.updateArticle(zyArticle);
+        zyLayoutDataMapper.updateZyLayoutData(zyLayoutDataList);
 
         return Result.success();
     }
@@ -141,12 +120,9 @@ public class ArticleServiceImpl implements ArticleService {
         List<String> articleIds = zyArticle.getArticleIds();
         List<ZYLayout> layoutList = zyLayoutMapper.getLayoutListString(articleIds);
 
-        List<ZYLayout> arrangeZyLayout = layoutList.stream().filter(item -> item.getLevel() != 0).collect(Collectors.toList());
-        List<ZYLayout> goZyLayout = layoutList.stream().filter(item -> item.getLevel() == 0).collect(Collectors.toList());
-
-        zyLayoutDataMapper.deleteZyLayoutData(goZyLayout);
-        zyTextMapper.deleteZyText(arrangeZyLayout);
-        zyLayoutImageMapper.deleteZyLayoutImage(arrangeZyLayout);
+        zyLayoutDataMapper.deleteZyLayoutData(layoutList);
+        zyTextMapper.deleteZyText(layoutList);
+        zyLayoutImageMapper.deleteZyLayoutImage(layoutList);
         zyLayoutMapper.deleteZyLayout(layoutList);
         zyArticleMapper.deleteArticle(articleIds);
 
@@ -165,25 +141,17 @@ public class ArticleServiceImpl implements ArticleService {
 
         if (!layoutList.isEmpty()) {
 
-            List<ZYLayout> goLayoutList = new ArrayList<>();
-
-            List<ZYLayout> arrangeZyLayout = new ArrayList<>();
-
             List<ZYLayout> skuZyLayout = new ArrayList<>();
 
             for (ZYLayout zt : layoutList) {
-                if (0 != zt.getLevel() && null == zt.getSkuId()) {
-                    arrangeZyLayout.add(zt);
-                } else if (0 == zt.getLevel()) {
-                    goLayoutList.add(zt);
-                } else {
+                if (null != zt.getSkuId()) {
                     skuZyLayout.add(zt);
                 }
             }
 
-            List<ZYLayoutData> layoutData = zyLayoutDataMapper.getLayoutData(goLayoutList);
+            List<ZYLayoutData> layoutData = zyLayoutDataMapper.getLayoutData(layoutList);
 
-            for (ZYLayout zt : goLayoutList) {
+            for (ZYLayout zt : layoutList) {
                 String layoutId = zt.getLayoutId();
                 for (ZYLayoutData zd : layoutData) {
                     if (zd.getLayoutId().equals(layoutId)) {
@@ -192,11 +160,12 @@ public class ArticleServiceImpl implements ArticleService {
                 }
             }
 
-            List<ZYText> text = zyTextMapper.getText(arrangeZyLayout);
-            List<ZYLayoutImage> layoutImage = zyLayoutImageMapper.getLayoutImage(arrangeZyLayout);
-            List<ZySku> layoutSku = zySkuMapper.getLayoutSku(skuZyLayout);
+            List<ZYText> text = zyTextMapper.getText(layoutList);
+            List<ZYLayoutImage> layoutImage = zyLayoutImageMapper.getLayoutImage(layoutList);
+            List<ZySku> layoutSku = null;
+            if (!skuZyLayout.isEmpty()) layoutSku = zySkuMapper.getLayoutSku(skuZyLayout);
 
-            if (!layoutSku.isEmpty()) {
+            if (null != layoutSku) {
                 List<ZyImage> image = zyImageMapper.getImages(layoutSku);
 
                 for (ZySku zs : layoutSku) {
@@ -229,7 +198,7 @@ public class ArticleServiceImpl implements ArticleService {
             }
 
 
-            for (ZYLayout zt : arrangeZyLayout) {
+            for (ZYLayout zt : layoutList) {
                 String layoutId = zt.getLayoutId();
                 for (int i = 0; i < layoutImage.size(); i++) {
                     ZYLayoutImage zyLayoutImage = layoutImage.get(i);
@@ -242,7 +211,7 @@ public class ArticleServiceImpl implements ArticleService {
                 if (layoutImage.size() == 0) break;
             }
 
-            for (ZYLayout zt : arrangeZyLayout) {
+            for (ZYLayout zt : layoutList) {
                 String layoutId = zt.getLayoutId();
                 for (int i = 0; i < text.size(); i++) {
                     ZYText zyText = text.get(i);
@@ -268,7 +237,7 @@ public class ArticleServiceImpl implements ArticleService {
                         i--;
                     }
                 }
-                za.setGoZyLayout(list);
+                za.setChildZyLayout(list);
             }
         }
         return Result.getDataTable(articleList);
@@ -285,7 +254,7 @@ public class ArticleServiceImpl implements ArticleService {
         List<ZYLayout> children = new ArrayList<>();
 
         for(ZYLayout t : list){
-            List<ZYLayout> arrangeZyLayout = t.getArrangeZyLayout();
+            List<ZYLayout> arrangeZyLayout = t.getChildZyLayout();
             if (null != arrangeZyLayout){
                 String layoutId = t.getLayoutId();
                 for (ZYLayout zy : arrangeZyLayout) {
@@ -309,7 +278,7 @@ public class ArticleServiceImpl implements ArticleService {
         List<ZYLayout> children = new ArrayList<>();
 
         for(ZYLayout t : list){
-            List<ZYLayout> arrangeZyLayout = t.getArrangeZyLayout();
+            List<ZYLayout> arrangeZyLayout = t.getChildZyLayout();
             if (null != arrangeZyLayout){
                 children.addAll(arrangeZyLayout);
             }
@@ -330,7 +299,9 @@ public class ArticleServiceImpl implements ArticleService {
         for(ZYLayout t : list){
             ZYText zyText = t.getZyText();
             ZYLayoutImage zyLayoutImage = t.getZyLayoutImage();
+            ZYLayoutData zyLayoutData = t.getZyLayoutData();
             String layoutId = t.getLayoutId();
+
             if (null != zyText){
                 zyText.setLayoutId(layoutId);
                 objects.add(zyText);
@@ -338,6 +309,10 @@ public class ArticleServiceImpl implements ArticleService {
             if (null != zyLayoutImage){
                 zyLayoutImage.setLayoutId(layoutId);
                 objects.add(zyLayoutImage);
+            }
+            if (null != zyLayoutData){
+                zyLayoutData.setLayoutId(layoutId);
+                objects.add(zyLayoutData);
             }
         }
 
@@ -357,17 +332,33 @@ public class ArticleServiceImpl implements ArticleService {
         for(ZYLayout t : list){
             ZYText zyText = t.getZyText();
             ZYLayoutImage zyLayoutImage = t.getZyLayoutImage();
+            ZYLayoutData zyLayoutData = t.getZyLayoutData();
             if (null != zyText){
                 objects.add(zyText);
             }
             if (null != zyLayoutImage){
                 objects.add(zyLayoutImage);
             }
+            if (null != zyLayoutData){
+                objects.add(zyLayoutData);
+            }
         }
 
         return objects;
     }
 
+
+    private void getObj(List<ZYText> zyTexts, List<ZYLayoutImage> zyLayoutImages, List<ZYLayoutData> zyLayoutDataList, List<Object> objects) {
+        for (Object obj : objects) {
+            if (obj instanceof ZYText){
+                zyTexts.add(JSONObject.parseObject(JSONObject.toJSONString(obj),ZYText.class));
+            }else if (obj instanceof ZYLayoutImage){
+                zyLayoutImages.add(JSONObject.parseObject(JSONObject.toJSONString(obj),ZYLayoutImage.class));
+            }else if (obj instanceof ZYLayoutData){
+                zyLayoutDataList.add(JSONObject.parseObject(JSONObject.toJSONString(obj),ZYLayoutData.class));
+            }
+        }
+    }
 
     /**
      * 组装树形数据
@@ -389,7 +380,7 @@ public class ArticleServiceImpl implements ArticleService {
         for (ZYLayout zt : collect) {
             List<ZYLayout> childList = map.get(Integer.parseInt(zt.getLayoutId()));
 
-            zt.setArrangeZyLayout(childList);
+            zt.setChildZyLayout(childList);
         }
 
         return collect;

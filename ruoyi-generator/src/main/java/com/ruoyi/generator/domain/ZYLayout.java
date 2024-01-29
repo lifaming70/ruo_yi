@@ -54,7 +54,7 @@ public class ZYLayout {
     /**
      * 布局对象
      */
-    private List<ZYLayout> arrangeZyLayout;
+    private List<ZYLayout> childZyLayout;
     /**
      * 层级
      */
