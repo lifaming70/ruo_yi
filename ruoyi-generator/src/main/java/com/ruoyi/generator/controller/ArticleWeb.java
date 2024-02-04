@@ -74,7 +74,7 @@ public class ArticleWeb {
     }
 
     /**
-     * 页面查询
+     * 页面以及页面布局查询
      * @param zyArticle
      * @return
      */
@@ -83,6 +83,23 @@ public class ArticleWeb {
     public TableDataInfo getList(@RequestBody ZYArticle zyArticle) {
         try {
             return articleService.getList(zyArticle);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>>>>>>>服务异常");
+            log.error(e.getMessage(),e);
+            return Result.getError();
+        }
+    }
+
+    /**
+     * 页面查询
+     * @param zyArticle
+     * @return
+     */
+    @Anonymous
+    @PostMapping("/getArticle")
+    public TableDataInfo getArticle(@RequestBody ZYArticle zyArticle) {
+        try {
+            return articleService.getArticle(zyArticle);
         }catch (Exception e){
             log.error(">>>>>>>>>>>>>>>>>服务异常");
             log.error(e.getMessage(),e);

@@ -243,6 +243,13 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.getDataTable(articleList);
     }
 
+    @Override
+    public TableDataInfo getArticle(ZYArticle zyArticle) {
+        PageHelper.startPage(zyArticle.getPageNum(),zyArticle.getPageSize());
+        List<ZYArticle> articleList = zyArticleMapper.getArticleList(zyArticle);
+        return Result.getDataTable(articleList);
+    }
+
     /**
      * 完善行下的列数据以及列下的列数据
      *

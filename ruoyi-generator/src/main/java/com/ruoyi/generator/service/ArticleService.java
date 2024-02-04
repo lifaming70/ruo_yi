@@ -14,4 +14,5 @@ public interface ArticleService {
 
       TableDataInfo getList(ZYArticle zyArticle);
 
+      TableDataInfo getArticle(ZYArticle zyArticle);
 }
